@@ -1,0 +1,375 @@
+\documentclass[letterpaper,10pt]{article}
+%paquetes
+\usepackage[spanish, es-tabla]{babel}%formato de las tablas 
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[T3,T1]{fontenc}
+\usepackage{amsmath,wasysym,amssymb,amsfonts,textcomp,latexsym}
+\usepackage{hyperref}
+\usepackage{appendix}
+\usepackage{enumitem}
+\usepackage[ruled,vlined,lined,linesnumbered,algosection,spanish]{algorithm2e}
+\usepackage{multimedia}
+%\usepackage[intlimits]{amsmath}
+\usepackage{flexisym}
+\usepackage{xparse}
+\usepackage{mathtools}
+\usepackage{bm}
+%%%
+% \usepackage{ragged2e}
+% \usepackage{pstricks,enumerate}
+
+%\setpapersize{A4}
+% Numeración
+%\usepackage{vmargin}
+%\setmargins{1.5cm}       % margen izquierdo
+%{1.5cm}                        % margen superior
+%{16.5cm}                      % anchura del texto
+%{23.42cm}                    % altura del texto
+%{10pt}                           % altura de los encabezados
+%{1cm}                           % espacio entre el texto y los encabezados
+%{0pt}                             % altura del pie de página
+%{2cm}                           % espacio entre el texto y el pie de página
+\setcounter{secnumdepth}{30}
+\title{Propuesta Alberto Rodríguez Sánchez}
+
+\begin{document}
+\renewcommand{\refname}{Bibliografía}%%pone en lugar de referencias bibliografía esta dentro porque se ocupap babel en otro caso iria afuera.
+% Pagina sin estilo para portada quitar encabezado, pie y número de página
+\thispagestyle{empty}
+
+\begin{center}
+	{\Huge Universidad Autónoma Metropolitana }\\
+	{\huge Unidad Azcapotzalco}\\
+	\vspace{0.5cm}
+	{\Large División de Ciencias Básicas e Ingeniería}\\
+	\vspace{1.0cm}
+	{\large Posgrado en Optimización}\\
+	\vspace{2.0cm}	
+	{\Large TODO}\\
+	\vspace{1.0cm}
+	{\large Propuesta de Proyecto de Investigación}\\
+	\vspace{2.0cm}
+	{\large\textbf{Alumno:}}\\
+	Alberto Rodríguez Sánchez\\
+	%\bigskip 2153800510\\
+	\vspace{1.5cm}
+	\bigskip
+	{\large\textbf{Asesores:}}\\ 
+	Dr. Antonin Ponsich Sebastien\\
+	\vspace{1.5cm}
+	 2017\\
+	\vspace{1.0cm}
+	Ciudad de México\\ 
+\end{center}
+\newpage
+\tableofcontents
+\newpage
+\section{Introducción}
+
+El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial; ya que, es comun encontrar problemas que requieren considerar multiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc, donde estos objetivos se encuentran en conflicto y se puede encontrar inmerso en diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros. El objetivo del problema puede ser:
+
+\begin{itemize}
+\item Minimizar costos de dicho bien o servicio con el fin de maximizar las ganancias. 
+\item Maximización de tiempos productivos.
+\item Maximización de la producción.
+\item Minimización de tiempos de entregas.
+\item Cantidad de empleados necesarios para realizar diferentes tareas. 
+\item Entre otras aplicaciones.
+\end{itemize}
+
+ En el \emph{MOP} se pueden realizar múltiples asignaciones de tareas a los agentes (personas o máquinas) y están limitadas por algún recurso disponible para cada agente.
+\newline
+
+ El propósito del problema de asignación clásico, consiste en encontrar emparejamientos de las tareas  con los agentes que las realizan, por lo que se asigna cada tarea a un sólo agente y a cada agente se le da sólo una tarea, donde un conjunto particular de asignaciones estará determinado por una función de criterio.
+\newline
+
+La asignación de varias tareas para un sólo agente es posible solo mediante la ampliación del problema de incluir tareas ficticias y duplicar agentes, sin embargo no hay manera de restringir estas asignaciones múltiples. Desde el punto de vista de aplicaciones, un modelo general permitiría la asignación de varias tareas para un sólo agente, siempre y cuando estas tareas no requieran más del recurso que está disponible para el agente. Algunos de los problemas que cumplen con esta generalidad son: 
+\newline
+
+Tarifas de modelos de localización de plantas fijas \ en el que las necesidades del cliente deben ser satisfechas por una sola planta y modelos de diseño de redes de comunicación con cierto nodo de capacidad restringida. El \emph{PAG} también se puede encontrar como un sub-problema de otros problemas en optimización combinatoria, como  en el caso de  ruteo de vehículos, problemas de localización, calendarización de máquinas, servicios, entre otros.
+\newline
+
+\subsection{Estado del arte del \emph{MOP}}
+
+El Problema de Optimización Multiobjetivo (MOP) (llamado también
+multicriterio o vectorial) puede definirse como el problema de
+encontrar (Osyczka, 1985)\cite{Osyczka1985193}:
+\begin{quote}
+Un vector de variables de decisión que satisfacen un cierto
+conjunto de restricciones y optimice un conjunto de funciones
+objetivo. Estas funciones forman una descripción matemática
+de los criterios de desempeño que suelen estar en conflicto
+unos con otros y que se suelen medir en unidades diferentes.
+El término ``optimizar'' en este caso toma pues un significado
+diferente al del caso de problemas mono-objetivo.
+\end{quote}
+
+\newpage
+\subsection{Formulación Matemática}
+EEl problema de Optimización Multiobjetivo (MOP) se define en su forma general de la siguiente manera:
+ 
+$$\min \overrightarrow{F(\bm{x})} = \left[ \overrightarrow{f_1(\bm{x})}, \overrightarrow{f_2(\bm{x})} , \dots, \overrightarrow{f_n(\bm{x})} \right] $$
+S.A:
+ 
+$$g_i(\bm{x}) \leq 0, i=1,2,\dots,m$$
+$$h_i(\bm{x}) = 0, i=1,2,\dots,p$$
+ 
+Buscamos el vector $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimice la función $\overrightarrow{F}$
+
+ 
+\subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
+
+Por ser el \emph{MOP} un problema ampliamente estudiado se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposion como:
+\newline
+
+Siwei Jiang y Jie Zhang (2011) proponen un algoritmo de  \cite{mie99}, Karabakal N. et al., (1993), proponen un método de ajuste del multiplicador de pendiente más pronunciado \cite{4358754}, Savelsbergh M. (1997) presenta ún algoritmo de ramificación y precio \cite{4358754}, I.R. de Farias et al. (2000) proponen una aproximación poliedral y muestran que cortan todos los vértices infactibles de la relajación del problema lineal y demuestran la superioridad del método de ramificación y corte sobre el de ramificación y acotamiento \cite{4358754}, entre otros.
+\newline
+
+
+
+También, heurísticas han sido propuestas para resolver el \emph{PAG}:
+\newline
+
+Martello, S. y P. Toth (1981) proponen una búsqueda glotona con búsqueda local \cite{4358754}, Mazzola (1989) describe una asignación generalizada con interacción de capacidad no lineal y un algoritmo heurístico en dos fases, donde la primera fase busca identificar una solución factible para la versión no lineal del PAG (NLPAG) y la segunda intenta mejorar la calidad de la solución a NLPAG  \cite{4358754}, Trick M.A. (1989) examina la estructura básica de la relajación lineal y muestra que hay más información disponible, esto conduce a una prueba alternativa del teorema de Benders y Van Neunen y emplean una heurística para el problema de asignación generalizada, para la generación de restricciones que generen límites inferiores para encontrar mejores soluciones \cite{4358754}, otras propuestas están en \cite{4358754}, \cite{4358754}.     
+\newline
+
+Algunos métodos híbridos han sido propuestos para resolver el \emph{PAG} e.g:
+\newline 
+Klastorin (1979) desarrolló un algoritmo heurístico de dos etapas utilizando un enfoque de subgradiente modificado y la estrategia de ramificación y acotamiento para resolver el problema de asignación generalizada \cite{4358754}, Fisher et al. (1986) describen un algoritmo de ramificación y acotamiento en el cual las cotas son obtenidas por una relajación lagrangiana con los conjuntos multiplicadores por un método de ajuste heurístico \cite{4358754}, Guignard M. et al. (1989) proponen un algoritmo basado en una improvisacion dual donde el rendimiento mejorado proviene de un productor de ascenso dual lagrangiano mejorado que resuelve un dual lagrangiano en cada nodo de enumeración añadiendo una restricción al modelo relajado lagrangiano y un elaborado esquema de ramificación y acotamiento \cite{4358754}, entre otros.
+ 	
+\section{Justificación}
+
+Debido a que el \emph{PAG} pertenece a la clase NP-Duro \cite{4358754}; ha sido  resuelto por diferentes métodos heurísticos con el fin de obtener una solución en un tiempo razonable.
+
+Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización \cite{4358754} .
+\newline
+
+ En la actualidad muchas heurísticas han surgido inspiradas por diferentes características de algún tipo  de comportamientos social o agentes diversos en la naturaleza, un subconjunto de estas ha sido desarrollado por imitación de las llamadas inteligencia de enjambre (SI) tales como aves y peces entre otros. La optimización  de enjambre de partículas se basó en el comportamiento de aves y peces \cite{4358754}, mientras que el algoritmo de luciérnagas se basó en el patrón intermitente de las luciérnagas tropicales \cite{4358754}, \cite{4358754}.
+\newline
+ 	
+Los algoritmos de luciérnagas (FA), gravitación universal (GSA) y el método de composición musical (MMC), los cuales fueron diseñados para ser aplicados a problemas de optimización continua,  han sido adaptados para problemas de optimización discreta \cite{4358754}, \cite{4358754}, \cite{4358754}. 
+Para el \emph{PAG} aún no han sido implementados estos tres métodos heurísticos, es por esa razón que se utilizarán en este trabajo con el fin de reportar su comportamiento, así mismo se compararán con algunas de las técnicas de las existentes en la literatura, en cuestión de calidad de la solución y tiempo de respuesta; para este trabajo se utilizarán las instancias de P. C. Chu y J. E. Beasley planteados en \cite{4358754}, los archivos se encuentran disponibles en \textbf{OR-Library} \cite{4358754}.
+
+\section{Objetivo General}
+
+Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instancias de prueba, las cuales se encuentran disponibles en \cite{zhang2008multiobjective} y comparar los resultados obtenidos con algunos reportados en la literatura.
+
+\section{Objetivos Particulares}
+
+\begin{itemize}
+\item Desarrollar al menos una estrategia para generar vectores iniciales de buena calidad para MOEA/D en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
+
+\item Desarrollar al menos una estrategia de actualizacion de vectores de pesos para el método MOEA/D.
+
+\item Desarrollar al menos una estrategia para generar puntos de referencia iniciales de buena calidad para NSGA-III en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
+
+\item Desarrollar al menos una estrategia de actualizacion de puntos de referencia para el método NSGA-III.
+
+\item Integrar la estrategia de repulsion de subpoblaciones\cite{ahrari2016multimodal} a los metodos MOEA/D y NSGA-III.
+
+\item Adaptar, implementar y describir el comportamiento del método MOEA/D para las instancias seleccionadas.
+ 
+\item Adaptar, implementar y describir el comportamiento del método NSGA-III para las instancias seleccionadas.
+
+\item Comparar los resultados obtenidos de las dos heurísticas con algunos resultados obtenidos en la literatura.
+
+\item Identificar las ventajas y desventajas de los algoritmos implementados con respecto a las metricas de diversidad.
+\end{itemize}
+
+ 
+
+\section{Marco de Trabajo MOEA/D}
+% El \emph{FA} fue desarrollado por Xin-Shen Yang de la Universidad de Cambridge en 2007. \cite{yang2010nature}
+% 
+% Es un algoritmo de optimización inspirado en la naturaleza, que se basa en el comportamiento social (intermitente) de luciérnagas o bichos de luz, las cuales emiten destellos cortos y rítmicos y tienen dos principios fundamentales:
+% \begin{itemize}
+% \item comunicación (atraer compañeros de apareamiento)
+% \item atraer a la presa potencial 
+% \end{itemize}
+% 
+% Existen dos cuestiones importantes del \emph{FA} asociado con la función objetivo \cite{yang2010nature}:
+% \begin{itemize}
+% \item La variación de la intensidad de la luz o el brillo I(r) varia de acuerdo a la ley del inverso cuadrado.
+% \begin{equation} I(r)= \frac{I_{s}}{r^{2}} \end{equation}
+% \item Donde $I_{s}$ es la intensidad de la fuente, para una media dada con un ajuste del coeficiente de absorción de luz  \emph{$\gamma$}, la intensidad de la luz \emph{I} varia con la distancia \emph{r}=. Esto es  	 
+% \begin{equation} I= I_{0}{e^{\gamma r}} \end{equation}
+% \item Donde $I_{0}$ es la intensidad de luz original, en el caso singular donde $r=0$  en la expresión  $I(r)= \frac{I_{s}}{r^{2}}$, el efecto combinado de la ley del cuadrado inverso y la absorción puede aproximarse de la siguiente forma Gaussiana.
+% \begin{equation} I= I_{0}{e^{\gamma r^{2}}}  \end{equation}
+% \item La formulación de atractivo \begin{math}\beta\end{math}
+% 
+% \begin{equation} \beta= \beta_{0}{e^{\gamma r^{2}}}\end{equation}
+% 
+% 
+% \item La distancia entre dos luciérnagas cualesquiera \emph{i} y \emph{j} y respectivamente  $x_{i}$ y $x_{j}$, es la distancia cartesiana.
+% 
+% \begin{equation} r_{i,j}= ||x_{i} - x_{j}||= \sqrt{ \sum_{k=1}^{d}(x_{i,k} - x_{j,k})}\end{equation} 
+% \end{itemize}
+% En \cite{yang2010nature} idealizan las características de los destellos de las luciérnagas para desarrollar el \emph{FA}.
+% 
+% El movimiento de una luciérnaga \emph i con localización \begin{math}x_{i}\end{math} atraída por otra luciérnaga j más brillante y localización \begin{math}x_{j}\end{math} esta determinada por:
+% \begin{center}
+% \begin{equation} x_{i}(t+1)=x_{i}(t)+ \beta_{0}{e^{\gamma {r_{i,j}^2}}}(x_{j} - x_{i})+\alpha\varepsilon_{i} \end{equation} 
+% \end{center}
+
+
+\subsection{Pseudocódigo MOEA/D}
+
+\section{Marco de Trabajo NSGA-III}
+
+% La ley de Gravitación Universal fue publicada en 1687 por Isaac Newton. El \emph{GSA} fue introducido por Esmat Rashedi et al. (2009) \cite{4358754} donde se muestra un algoritmo de búsqueda poblacional basado en las reglas de la gravitación universal donde se da una breve descripción de la fuerza gravitacional para proporcionar un medio apropiado y seguido por la explicación de \emph{ GSA}.  
+% 
+% \subsection{Ley de la gravitación}
+% La gravitación es la tendencia de las masas a acelerar  una hacia otra, esta es una de las cuatro fundamentales interacciones en la naturaleza (las otras son: la fuerza electromagnética, la fuerza nuclear débil y la fuerza nuclear fuerte). Por lo que, cada partícula en el universo atrae a cualquier otra partícula con una ``fuerza gravitacional'' \cite{rashedi2009gsa}. 
+% \newline
+% 
+% La forma de la fuerza gravitacional de Newton es llamada ``acción distancia'', significa cambios de gravedad entre partículas separadas sin cualquier intermediario y sin demora alguna. 
+% \newline
+% 
+%  La fuerza gravitacional entre dos partículas es directamente proporcional al producto de sus masas $M_{1}$ y $M_{2}$ e inversamente proporcional al cuadrado de las distancias R entre ellas.
+% \newline
+% \begin{equation}F= \frac{GM_1M_2}{R^2}\end{equation}
+% \newline 
+% 
+% Donde \emph{F} es la magnitud de la fuerza gravitacional, \emph{G} es la constante gravitacional, \emph{$M_{1}$} y  \emph{$M_{2}$} son las masas de la primera y segunda partícula respectivamente y \emph{R} es la distancia entre las dos partículas.
+% \newline
+% 
+%  La segunda ley de Newton dice que cuando una fuerza, ``F'', es aplicada a una partícula, su aceleración ``a'', depende sólo de la fuerza y su masa ``M". \newline
+%  \begin{equation}a= \frac{F}{M}\end{equation}
+%  \newline
+% 
+%  Hay una fuerza de atracción entre todas las partículas del universo, donde el efecto de la partícula  más grande y la partícula más pequeña es mayor, por lo que, un incremento en la distancia entre dos partículas significa decrecimiento en la fuerza de gravedad entre ellas.\newline
+%  
+%  Debido al efecto de disminuir la gravedad, el valor actual de la constante gravitacional depende del estado actual del universo, la siguiente fórmula describe 	el decrecimiento de la contante gravitacional, ``G'', con el estado: 
+% 
+% \begin{equation} G(t)=G(t_{0})x(\frac{t_{0}}{t})^\beta, \text{ } \text{ }\beta <1\end{equation}
+% 
+% Donde \emph{$G(t)$} es el valor de la constante gravitacional en el tiempo t, \emph{$G(t_{0})$} es el valor de la constante gravitacional en el intervalo de tiempo \emph{$t_{0}$}.
+% \newline
+% 
+% En el \emph{GSA} cada masa(Agente) tiene cuatro especificaciones:
+% \begin{itemize}
+% \item[] a) Posición, b) Masa de inercia, c) Masa gravitacional activa, d) Masa gravitacional pasiva.
+% \end{itemize}
+% 
+% La posición de la masa corresponde a una solución del problema y las masas de inercia y gravitacional son determinadas utilizando la función objetivo o función aptitud, en otras palabras cada masa representa una solución y el algoritmo navega ajustando correctamente las masas gravitacionales y la inercia, con el transcurso de tiempo, esperando que las masas sean atraídas por las masas más pesadas, éstas representan una mejor solución en el espacio de búsqueda.
+% 
+\subsection{Pseudocódigo NSGA-III}
+% 
+% \section{Método de composición musical }
+% 
+% El \emph{MMC} es un algoritmo cultural inspirado en una analogía entre el proceso de optimización y el proceso creativo de composición musical en un entorno sociocultural fue planteado Mora Gutiérrez et. al (2012) para resolver un problema de optimización con restricciones \cite{4358754}. Para el diseño y el desarrollo del algoritmo MMC se utilizaron las similitudes entre los procesos de composición musical y de optimización.
+% \newline
+% 
+% La idea principal del algoritmo se basa en el proceso creativo que combina la imaginación, elementos musicales y conocimientos a fin de obtener una obra musical que cumpla con cierto estándar estético. Por lo que, el proceso de composición es más complejo que la simple asociación de elementos, ya que involucra los sistemas creativos sociocultural y personal para la generación de un producto artístico\cite{4358754}.
+% \newline
+% 
+% La estructura básica del algoritmo es la siguiente: inicialmente, se genera una sociedad artificial de Nc compositores y se definen las reglas de interacción entre los agentes que la conforman. Entonces, para cada uno de los compositores en la sociedad, aleatoriamente, se crea un conjunto de Ns temas que se registran en la partitura asociada a ese compositor $(P_{1},...,P_{i})$ la partitura servirá como la memoria del compositor, posteriormente y hasta satisfacer el criterio de paro, se realiza lo siguiente: 
+% \begin{itemize}
+% \item[a)] Se actualizan los vínculos entre los compositores de la sociedad.
+% \item[b)] Cada uno analiza la información recibida de los demás compositores y selecciona datos que toma del entorno a esto se le denomina ideas adquiridas socialmente $(ISC_{1}, ....,ISC_{i}	)$.
+% \item[c)] El compositor \emph{i} construye su conocimiento $(Km_{1},....,Km_{i})$ uniendo su conocimiento con la información obtenida \begin{math} KM= P \bigcup ISC \end{math}.
+% \item[d)] Cada compositor genera una nueva melodía $(x_{i},nuevo)$ a partir de su conocimiento y sus destellos de genialidad, determinando el grado de satisfacción alcanzado por $x_{i} ,nuevo$ 
+% \item[e)] Finalmente con base en el grado de satisfacción, debe decidir si $x_{i} ,nuevo$ remplazará a algún elemento de su partitura. 
+% \end{itemize}
+
+
+\section{Metodología}
+
+Para la implementación de las tres heurísticas basadas en inteligencia de partículas, se ha estado haciendo una revisión en el estado del arte para analizar las características de FA, GSA y MMC.  Así como también, si existe una discretización  de las mismas, analizando sus fortalezas y debilidades, tomándolas  como  base para la adaptación al problema, posteriormente se propondrán mejoras a estos algoritmos.
+ 
+Posteriormente se realizará un análisis estadístico de cada una de las técnicas implementadas, comparando su rendimiento contra algunas de las  técnicas propuestas en la literatura.
+ 
+ \begin{itemize}
+ \item[•] \textbf{ETAPA 1.} \emph{Se analizó el estado del arte para el PAG.}
+\item[] Identificando y listando las técnicas reportadas en tres clases: métodos exactos, métodos heurísticos y métodos híbridos. Así mismo, se han revisado las técnicas que se busca implementar al problema analizando su estructura y características.
+\emph{(Concluida)}
+
+\item[•] \textbf{Etapa 2.} \emph{Adaptación e implementación de nuestras tres técnicas heurísticas basadas en inteligencia de partículas para resolver el PAG.}
+
+\item[] Con base al análisis del perfil de nuestras técnicas, se implementarán en un lenguaje de programación.
+        
+\item[•] \textbf{Etapa 3.} \emph{Comparaciones de las técnicas y análisis estadístico.}
+
+\item [] Una vez que se tengan las estrategias implementadas, se realizarán comparaciones de calidad de las soluciones obtenidas por cada una y la cantidad de recursos computacionales  que utilizan. Posteriormente, se justificará su rendimiento con un análisis estadístico detallado para cada  una de estas.
+
+\item[•] \textbf{Etapa 4.} \emph{Proceso de mejora de las técnicas.}
+
+\item[] Las técnicas se someterán a un estudio para identificar si algunas funciones se pueden mejorar con algún cambio en la implementación, que dé como resultado disminución en el tiempo de ejecución o reducción en el costos de recursos.
+
+
+\item[•] \textbf{Etapa 5.} Comparación de las técnicas definidas y reporte de resultados.
+
+\item[] Una vez terminada la etapa de mejoras de cada una de las técnicas, se realizará un nuevo análisis estadístico para comparar el rendimiento de cada una de nuestra técnicas, describiendo los resultados obtenidos.
+        
+  \end{itemize}
+
+\subsection{\textbf{Diseño de experimentos}}
+Los experimentos consistirán en la medición de la calidad de las soluciones dadas por cada una de las técnicas así como de su tiempo de ejecución para un conjunto de instancias para el PAG.
+         
+\section{Cronograma}
+\begin{table}[H]
+\centering
+
+\label{my-label}
+\scalebox{0.9}{\begin{tabular}{|c|c|c|c|c|}
+\hline
+\begin{tabular}[c]{@{}c@{}}Nombre\\   de la tarea\end{tabular} & Fecha de Inicio & Fecha final & \% Completado & Duración \\ \hline
+Presentación propuesta de tesis                                & 01/02/17        & 22/03/17    & 100\%         & 36d      \\ \hline
+Adaptación FA para el PAG                                      & 01/02/17        & 17/07/17    & 70\%          & 119d     \\ \hline
+Adaptación GSA para el PAG                                     & 12/04/17        & 19/07/17    &               & 71d      \\ \hline
+Adaptación MMC para el PAG                                     & 15/05/17        & 17/07/17    &               & 46d      \\ \hline
+Análisis y comparación de técnicas                             & 17/07/17        & 17/08/17    &               & 24d      \\ \hline
+Redacción de tesis                                             & 21/08/17        & 20/10/17    &               & 45d      \\ \hline
+Entrega de tesis                                               & 23/10/17        & 23/10/17    &               & 1d       \\ \hline
+\end{tabular}
+}
+\caption{Cronograma}
+\end{table}
+
+
+
+\begin{table}[H]
+\centering
+\label{my-label}
+\scalebox{0.6}{\begin{tabular}{|c|l|}
+\hline
+Nombre de la tarea                 & \multicolumn{1}{c|}{Metas alcanzar al terminar la tarea}                                                                                                                                                                                                                                                                                                                                                            \\ \hline
+Presentación propuesta de tesis    & Aprobación de propuesta de tesis por el comité de posgrado.                                                                                                                                                                                                                                                                                                                                                         \\ \hline
+Correcciones propuesta de tesis    & Registro de Aceptación de tesis.                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
+Adaptación FA para el PAG          & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG y probada\\ con algunas instancias disponibles, esperando tener buenos resultados con respecto de\\  las técnicas existentes en la literatura,  comparando la calidad de la solución y el número\\  de llamadas a la función objetivo;  así como las ventajas y desventajas que ofrece esta técnica.\end{tabular} \\ \hline
+Adaptación GSA para el PAG         & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG  y probada \\ con algunas instancias disponibles,  esperando tener buenos resultados con respecto de\\ las técnicas existentes en la literatura, comparando la calidad de la solución y el número\\ de llamadas a la función objetivo; así como las ventajas y desventajas que ofrece esta técnica.\end{tabular}  \\ \hline
+Adaptación MMC para el PAG         & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG y probada \\ con algunas instancias disponibles, esperando tener buenos resultados con respecto de \\ las técnicas existentes en la literatura, comparando la calidad de la solución y el número\\ de llamadas a la función objetivo;  así como las ventajas y desventajas que ofrece esta técnica.\end{tabular}  \\ \hline
+Anélisis y comparación de técnicas & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de nuestras técnicas con la finalidad de poder\\ decir cuales son sus ventajas o defectos al ser utilizadas con las instancias seleccionadas\\ para el PAG.\end{tabular}                                                                                                                                                                            \\ \hline
+Redacción de tesis                 & Documentación de la investigación realizada.                                                                                                                                                                                                                                                                                                                                                                        \\ \hline
+Entrega de tesis                   & \begin{tabular}[c]{@{}l@{}}Obtener la\\   aprobación y fecha para el examen de grado\end{tabular}                                                                                                                                                                                                                                                                                                                   \\ \hline
+\end{tabular}
+}
+\caption{Metas}
+
+\end{table}
+
+%\begin{figure}[H]
+%\begin{center}
+    %\scalebox{0.800}{\includegraphics{cronogramatesis.jpg}}%%%%%%%%%%%%%%%%%%Cambiar imagen.
+  
+ % \label{sol}
+%   \caption{Cronograma.}
+   
+%\end{center}
+%\end{figure}
+
+%\begin{figure}[H]
+%\begin{center}
+%    \scalebox{0.600}{\includegraphics{cronograma2.jpg}}%%%%%%%%%%%%%%%%%%Cambiar imagen.
+  
+ % \label{sol}
+  % \caption{Cronograma2.}
+   
+%\end{center}
+%\end{figure}
+\bibliographystyle{acm}
+\bibliography{bibliografia}
+\end{document}
