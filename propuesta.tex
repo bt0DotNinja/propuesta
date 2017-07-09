@@ -69,27 +69,25 @@
 \newpage
 \section{Introducción}
 
-El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial; ya que, es comun encontrar problemas que requieren considerar multiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc, donde estos objetivos se encuentran en conflicto y se puede encontrar inmerso en diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros. El objetivo del problema puede ser:
+El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial; ya que, es comun encontrar problemas que requieren considerar multiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc, donde estos objetivos se encuentran en conflicto y se puede encontrar inmerso en diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros. Desde el punto vista Metaheuristico se han generado tres grandes ramas para resolver el \emph{MOP}:
 
 \begin{itemize}
-\item Minimizar costos de dicho bien o servicio con el fin de maximizar las ganancias. 
-\item Maximización de tiempos productivos.
-\item Maximización de la producción.
-\item Minimización de tiempos de entregas.
-\item Cantidad de empleados necesarios para realizar diferentes tareas. 
-\item Entre otras aplicaciones.
+ \item Descomposición
+ \item Dominancia
+ \item Métricas
 \end{itemize}
 
- En el \emph{MOP} se pueden realizar múltiples asignaciones de tareas a los agentes (personas o máquinas) y están limitadas por algún recurso disponible para cada agente.
+El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalares y suele introducir tecnicas poblacionales para la resolucion simultanea de ellos, es importante selecciona los problemas escalares conforme a algún criterio que permita mejorar la diversidad, dejando la convergencia al submetodo de resolucion.Un marco de trabajo moderno con este enfoque es \emph{MOEA/D}.
 \newline
 
- El propósito del problema de asignación clásico, consiste en encontrar emparejamientos de las tareas  con los agentes que las realizan, por lo que se asigna cada tarea a un sólo agente y a cada agente se le da sólo una tarea, donde un conjunto particular de asignaciones estará determinado por una función de criterio.
+En el enfoque de dominancia se utilizan las relaciones de dominancia de Pareto para inducir un orden parcial en el espacio de los objetivos y de esta manera decidir cuando una solucion en dicho espacio es comparable con otra y de serlo cual es mejor, dicho orden parcial esta limitado en espacios de altas dimensiones puesto que gran cantidad de soluciones seran no comparables merma la efectividad de los procedimientos de selección. \emph{NSGA-III} un marco de trabajo moderno con este enfoque incorpora tecnicas de nichos para sortear este problema.
 \newline
 
-La asignación de varias tareas para un sólo agente es posible solo mediante la ampliación del problema de incluir tareas ficticias y duplicar agentes, sin embargo no hay manera de restringir estas asignaciones múltiples. Desde el punto de vista de aplicaciones, un modelo general permitiría la asignación de varias tareas para un sólo agente, siempre y cuando estas tareas no requieran más del recurso que está disponible para el agente. Algunos de los problemas que cumplen con esta generalidad son: 
+El enfoque de métricas convierte el problema multiobjetivo en un problema mono objetivo que maximiza el valor de métricas que permitan definir si el conjunto de soluciones es de buena calidad y  tiene buena dispersión, una métrica popular es el hipervolúmen ya que permite saber al mismo tiempo si se tiene cierta convergencia y dispersión. Sin embargo, calcular estas metricas se vuelve costoso conforme aumentan las dimensiones del problema multiobjetivo original, por ejemplo, la mejor forma conocidad de calcular el hipervolúmen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de puntos en el frente y $m$ las dimensiones de los mismos. 
+
 \newline
 
-Tarifas de modelos de localización de plantas fijas \ en el que las necesidades del cliente deben ser satisfechas por una sola planta y modelos de diseño de redes de comunicación con cierto nodo de capacidad restringida. El \emph{PAG} también se puede encontrar como un sub-problema de otros problemas en optimización combinatoria, como  en el caso de  ruteo de vehículos, problemas de localización, calendarización de máquinas, servicios, entre otros.
+Es importante hacer notar ... 
 \newline
 
 \subsection{Estado del arte del \emph{MOP}}
@@ -160,37 +158,35 @@ Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instan
 \section{Objetivos Particulares}
 
 \begin{itemize}
-\item Desarrollar al menos una estrategia para generar vectores iniciales de buena calidad para MOEA/D en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
+\item Desarrollar al menos una estrategia para generar vectores iniciales de buena calidad para \emph{MOEA/D} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
 
-\item Desarrollar al menos una estrategia de actualizacion de vectores de pesos para el método MOEA/D.
+\item Desarrollar al menos una estrategia de actualizacion de vectores de pesos para el método \emph{MOEA/D}.
 
-\item Desarrollar al menos una estrategia para generar puntos de referencia iniciales de buena calidad para NSGA-III en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
+\item Desarrollar al menos una estrategia para generar puntos de referencia iniciales de buena calidad para \emph{NSGA-III} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
 
-\item Desarrollar al menos una estrategia de actualizacion de puntos de referencia para el método NSGA-III.
+\item Desarrollar al menos una estrategia de actualizacion de puntos de referencia para el método \emph{NSGA-III}.
 
-\item Integrar la estrategia de repulsion de subpoblaciones\cite{ahrari2016multimodal} a los metodos MOEA/D y NSGA-III.
+\item Integrar la estrategia de repulsion de subpoblaciones\cite{ahrari2016multimodal} a los metodos \emph{MOEA/D} y \emph{NSGA-III}.
 
-\item Adaptar, implementar y describir el comportamiento del método MOEA/D para las instancias seleccionadas.
+\item Adaptar, implementar y describir el comportamiento del método \emph{MOEA/D} para las instancias seleccionadas.
  
-\item Adaptar, implementar y describir el comportamiento del método NSGA-III para las instancias seleccionadas.
+\item Adaptar, implementar y describir el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
 
 \item Comparar los resultados obtenidos de las dos heurísticas con algunos resultados obtenidos en la literatura.
 
 \item Identificar las ventajas y desventajas de los algoritmos implementados con respecto a las metricas de diversidad.
 \end{itemize}
 
- 
-
 \section{Marco de Trabajo MOEA/D}
-% El \emph{FA} fue desarrollado por Xin-Shen Yang de la Universidad de Cambridge en 2007. \cite{yang2010nature}
-% 
-% Es un algoritmo de optimización inspirado en la naturaleza, que se basa en el comportamiento social (intermitente) de luciérnagas o bichos de luz, las cuales emiten destellos cortos y rítmicos y tienen dos principios fundamentales:
-% \begin{itemize}
-% \item comunicación (atraer compañeros de apareamiento)
-% \item atraer a la presa potencial 
-% \end{itemize}
-% 
-% Existen dos cuestiones importantes del \emph{FA} asociado con la función objetivo \cite{yang2010nature}:
+El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007. \cite{4358754}
+ 
+Es un algoritmo de optimización inspirado en las tecnicas de descomposion y los algoritmos geneticos, que se basa en el descomponer un problema multiobjetivo en $N$ problemas de optimización escalares y resolverlos simultaneamente, de esta manera se caracteriza por tener las siguientes caracteristicas
+ \begin{itemize}
+ \item Tecnicas de analisis geometrico sobre el simplejo del problema \cite{mie99,Das:1998:NIN:588907.589322, Messac2003}
+ \item Mejora de soluciones hasta optimos locales/globales garantizados por el teorema de Holland\cite{Holland:1992:ANA:531075}
+ \end{itemize}
+ 
+Existen cuestiones importantes del \emph{MOEA/D} asociado con la geometria del problema de programación no lineal \cite{4358754}:
 % \begin{itemize}
 % \item La variación de la intensidad de la luz o el brillo I(r) varia de acuerdo a la ley del inverso cuadrado.
 % \begin{equation} I(r)= \frac{I_{s}}{r^{2}} \end{equation}
