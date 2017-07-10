@@ -17,6 +17,11 @@
 \usepackage{xparse}
 \usepackage{mathtools}
 \usepackage{bm}
+\usepackage{draftwatermark}
+
+\SetWatermarkText{\textsc{Borrador}}
+\SetWatermarkScale{5}
+\SetWatermarkAngle{55}
 %%%
 % \usepackage{ragged2e}
 % \usepackage{pstricks,enumerate}
@@ -89,6 +94,8 @@ El enfoque de métricas convierte el problema multiobjetivo en un problema mono 
 Es importante hacer notar ... \emph{Ideas sobre los enfoques de descomposición y dominancia y los la geometria del  simplejo y los nichos??} 
 \newline
 
+{\huge TODO}
+
 \subsection{Estado del arte del \emph{MOP}}
 
 El Problema de Optimización Multiobjetivo (MOP) (llamado también
@@ -104,7 +111,6 @@ El término ``optimizar'' en este caso toma pues un significado
 diferente al del caso de problemas mono-objetivo.
 \end{quote}
 
-\newpage
 \subsection{Formulación Matemática}
 El problema de Optimización Multiobjetivo (MOP) se define en su forma general de la siguiente manera:
  
@@ -116,27 +122,30 @@ $$h_i(\bm{x}) = 0, i=1,2,\dots,p$$
  
 Buscamos el vector $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimice la función $\overrightarrow{F}$
 
+\newpage
  
 \subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
 
 Por ser el \emph{MOP} un problema ampliamente estudiado se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposion como:
 \newline
 
-Siwei Jiang y Jie Zhang (2011) proponen un algoritmo de  \cite{mie99}, Karabakal N. et al., (1993), proponen un método de ajuste del multiplicador de pendiente más pronunciado \cite{4358754}, Savelsbergh M. (1997) presenta ún algoritmo de ramificación y precio \cite{4358754}, I.R. de Farias et al. (2000) proponen una aproximación poliedral y muestran que cortan todos los vértices infactibles de la relajación del problema lineal y demuestran la superioridad del método de ramificación y corte sobre el de ramificación y acotamiento \cite{4358754}, entre otros.
-\newline
+{\huge TODO}
 
-
-
-También, heurísticas han sido propuestas para resolver el \emph{PAG}:
-\newline
-
-Martello, S. y P. Toth (1981) proponen una búsqueda glotona con búsqueda local \cite{4358754}, Mazzola (1989) describe una asignación generalizada con interacción de capacidad no lineal y un algoritmo heurístico en dos fases, donde la primera fase busca identificar una solución factible para la versión no lineal del PAG (NLPAG) y la segunda intenta mejorar la calidad de la solución a NLPAG  \cite{4358754}, Trick M.A. (1989) examina la estructura básica de la relajación lineal y muestra que hay más información disponible, esto conduce a una prueba alternativa del teorema de Benders y Van Neunen y emplean una heurística para el problema de asignación generalizada, para la generación de restricciones que generen límites inferiores para encontrar mejores soluciones \cite{4358754}, otras propuestas están en \cite{4358754}, \cite{4358754}.     
-\newline
-
-Algunos métodos híbridos han sido propuestos para resolver el \emph{PAG} e.g:
-\newline 
-Klastorin (1979) desarrolló un algoritmo heurístico de dos etapas utilizando un enfoque de subgradiente modificado y la estrategia de ramificación y acotamiento para resolver el problema de asignación generalizada \cite{4358754}, Fisher et al. (1986) describen un algoritmo de ramificación y acotamiento en el cual las cotas son obtenidas por una relajación lagrangiana con los conjuntos multiplicadores por un método de ajuste heurístico \cite{4358754}, Guignard M. et al. (1989) proponen un algoritmo basado en una improvisacion dual donde el rendimiento mejorado proviene de un productor de ascenso dual lagrangiano mejorado que resuelve un dual lagrangiano en cada nodo de enumeración añadiendo una restricción al modelo relajado lagrangiano y un elaborado esquema de ramificación y acotamiento \cite{4358754}, entre otros.
- 	
+% Siwei Jiang y Jie Zhang (2011) proponen un algoritmo de  \cite{mie99}, Karabakal N. et al., (1993), proponen un método de ajuste del multiplicador de pendiente más pronunciado \cite{4358754}, Savelsbergh M. (1997) presenta ún algoritmo de ramificación y precio \cite{4358754}, I.R. de Farias et al. (2000) proponen una aproximación poliedral y muestran que cortan todos los vértices infactibles de la relajación del problema lineal y demuestran la superioridad del método de ramificación y corte sobre el de ramificación y acotamiento \cite{4358754}, entre otros.
+% \newline
+% 
+% 
+% 
+% También, heurísticas han sido propuestas para resolver el \emph{PAG}:
+% \newline
+% 
+% Martello, S. y P. Toth (1981) proponen una búsqueda glotona con búsqueda local \cite{4358754}, Mazzola (1989) describe una asignación generalizada con interacción de capacidad no lineal y un algoritmo heurístico en dos fases, donde la primera fase busca identificar una solución factible para la versión no lineal del PAG (NLPAG) y la segunda intenta mejorar la calidad de la solución a NLPAG  \cite{4358754}, Trick M.A. (1989) examina la estructura básica de la relajación lineal y muestra que hay más información disponible, esto conduce a una prueba alternativa del teorema de Benders y Van Neunen y emplean una heurística para el problema de asignación generalizada, para la generación de restricciones que generen límites inferiores para encontrar mejores soluciones \cite{4358754}, otras propuestas están en \cite{4358754}, \cite{4358754}.     
+% \newline
+% 
+% Algunos métodos híbridos han sido propuestos para resolver el \emph{PAG} e.g:
+% \newline 
+% Klastorin (1979) desarrolló un algoritmo heurístico de dos etapas utilizando un enfoque de subgradiente modificado y la estrategia de ramificación y acotamiento para resolver el problema de asignación generalizada \cite{4358754}, Fisher et al. (1986) describen un algoritmo de ramificación y acotamiento en el cual las cotas son obtenidas por una relajación lagrangiana con los conjuntos multiplicadores por un método de ajuste heurístico \cite{4358754}, Guignard M. et al. (1989) proponen un algoritmo basado en una improvisacion dual donde el rendimiento mejorado proviene de un productor de ascenso dual lagrangiano mejorado que resuelve un dual lagrangiano en cada nodo de enumeración añadiendo una restricción al modelo relajado lagrangiano y un elaborado esquema de ramificación y acotamiento \cite{4358754}, entre otros.
+%  	
 \section{Justificación}
 
 % Debido a que el \emph{PAG} pertenece a la clase NP-Duro \cite{4358754}; ha sido  resuelto por diferentes métodos heurísticos con el fin de obtener una solución en un tiempo razonable.
@@ -187,7 +196,6 @@ Es un algoritmo de optimización inspirado en las tecnicas de descomposion y los
  
 Existen cuestiones importantes del \emph{MOEA/D} asociado con la geometria del problema de programación no lineal \cite{4358754}:
 
-TODO
 % \begin{itemize}
 % \item La variación de la intensidad de la luz o el brillo I(r) varia de acuerdo a la ley del inverso cuadrado.
 % \begin{equation} I(r)= \frac{I_{s}}{r^{2}} \end{equation}
@@ -242,7 +250,9 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 
 \section{Marco de Trabajo NSGA-III}
 
-El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}, 
+El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}, es una mejora a NSGA-II para trabajar con problemas de más de  $3$ funciones objetivos. ropone sustituir “Crowding distance” por métodos de nichos de tal manera que ayuden a mejorar la diversidad de la poblacion.
+
+{\huge TODO}
 
 % La ley de Gravitación Universal fue publicada en 1687 por Isaac Newton. El \emph{GSA} fue introducido por Esmat Rashedi et al. (2009) \cite{4358754} donde se muestra un algoritmo de búsqueda poblacional basado en las reglas de la gravitación universal donde se da una breve descripción de la fuerza gravitacional para proporcionar un medio apropiado y seguido por la explicación de \emph{ GSA}.  
 % 
@@ -327,16 +337,16 @@ El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014
 
 \section{Metodología}
 
-Para la implementación de las tres heurísticas basadas en inteligencia de partículas, se ha estado haciendo una revisión en el estado del arte para analizar las características de FA, GSA y MMC.  Así como también, si existe una discretización  de las mismas, analizando sus fortalezas y debilidades, tomándolas  como  base para la adaptación al problema, posteriormente se propondrán mejoras a estos algoritmos.
+Para la implementación de las dos heurísticas basadas en los enfoques de descomposición y dominancia, se ha estado haciendo una revisión en el estado del arte para analizar las características de los marcos de trabajo NSGA-III y MOEA/D, tomándolas  como  base para la adaptación al problema, posteriormente se propondrán mejoras a estos algoritmos.
  
 Posteriormente se realizará un análisis estadístico de cada una de las técnicas implementadas, comparando su rendimiento contra algunas de las  técnicas propuestas en la literatura.
  
  \begin{itemize}
- \item[•] \textbf{ETAPA 1.} \emph{Se analizó el estado del arte para el PAG.}
-\item[] Identificando y listando las técnicas reportadas en tres clases: métodos exactos, métodos heurísticos y métodos híbridos. Así mismo, se han revisado las técnicas que se busca implementar al problema analizando su estructura y características.
+ \item[•] \textbf{ETAPA 1.} \emph{Se analizó el estado del arte para el MOEA/D y NSGA-III identificando los aportes recientes en cuestiones de diversidad.}
+\item[] Identificando y listando las técnicas reportadas en tres clases: métodos basados en descomposición, métodos basados en dominancia y métodos basados en metricas. Así mismo, se han revisado las técnicas que se busca implementar al problema analizando su estructura y características.
 \emph{(Concluida)}
 
-\item[•] \textbf{Etapa 2.} \emph{Adaptación e implementación de nuestras tres técnicas heurísticas basadas en inteligencia de partículas para resolver el PAG.}
+\item[•] \textbf{Etapa 2.} \emph{Adaptación e implementación de los marcos de trabajo MOEA/D y NSGA-III para incluir mejoras en la seleccion de vectores/puntos de referencia iniciales y tecnicas de adaptacion dinamica de los mismos.}
 
 \item[] Con base al análisis del perfil de nuestras técnicas, se implementarán en un lenguaje de programación.
         
@@ -356,23 +366,22 @@ Posteriormente se realizará un análisis estadístico de cada una de las técni
   \end{itemize}
 
 \subsection{\textbf{Diseño de experimentos}}
-Los experimentos consistirán en la medición de la calidad de las soluciones dadas por cada una de las técnicas así como de su tiempo de ejecución para un conjunto de instancias para el PAG.
+Los experimentos consistirán en la medición de la calidad de las soluciones dadas por cada una de las técnicas así como de su tiempo de ejecución para un conjunto de instancias benchmark.
          
 \section{Cronograma}
 \begin{table}[H]
 \centering
 
 \label{my-label}
-\scalebox{0.9}{\begin{tabular}{|c|c|c|c|c|}
+\scalebox{0.9}{\begin{tabular}{|l|c|c|c|c|}
 \hline
 \begin{tabular}[c]{@{}c@{}}Nombre\\   de la tarea\end{tabular} & Fecha de Inicio & Fecha final & \% Completado & Duración \\ \hline
-Presentación propuesta de tesis                                & 01/02/17        & 22/03/17    & 100\%         & 36d      \\ \hline
-Adaptación FA para el PAG                                      & 01/02/17        & 17/07/17    & 70\%          & 119d     \\ \hline
-Adaptación GSA para el PAG                                     & 12/04/17        & 19/07/17    &               & 71d      \\ \hline
-Adaptación MMC para el PAG                                     & 15/05/17        & 17/07/17    &               & 46d      \\ \hline
-Análisis y comparación de técnicas                             & 17/07/17        & 17/08/17    &               & 24d      \\ \hline
-Redacción de tesis                                             & 21/08/17        & 20/10/17    &               & 45d      \\ \hline
-Entrega de tesis                                               & 23/10/17        & 23/10/17    &               & 1d       \\ \hline
+Presentación propuesta de tesis                                & XX/XX/17        & XX/XX/17    & XXX\%         & XXd      \\ \hline
+Adaptación MOEA/D con adaptacion de vectores                   & XX/XX/17        & XX/XX/17    & XX\%          & XXd     \\ \hline
+Adaptación NSGA-III con adaptacion de puntos de referencia     & XX/XX/17        & XX/XX/17    &               & XXd      \\ \hline
+Análisis y comparación de técnicas                             & XX/XX/17        & XX/XX/17    &               & XXd      \\ \hline
+Redacción de tesis                                             & XX/XX/17        & XX/XX/17    &               & XXd      \\ \hline
+Entrega de tesis                                               & XX/XX/17        & XX/XX/17    &               & 1d       \\ \hline
 \end{tabular}
 }
 \caption{Cronograma}
@@ -383,7 +392,7 @@ Entrega de tesis                                               & 23/10/17       
 \begin{table}[H]
 \centering
 \label{my-label}
-\scalebox{0.6}{\begin{tabular}{|c|l|}
+\scalebox{0.6}{\begin{tabular}{|l|l|}
 \hline
 Nombre de la tarea                 & \multicolumn{1}{c|}{Metas alcanzar al terminar la tarea}                                                                                                                                                                                                                                                                                                                                                            \\ \hline
 Presentación propuesta de tesis    & Aprobación de propuesta de tesis por el comité de posgrado.                                                                                                                                                                                                                                                                                                                                                         \\ \hline
