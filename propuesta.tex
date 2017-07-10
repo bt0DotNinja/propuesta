@@ -84,10 +84,9 @@ En el enfoque de dominancia se utilizan las relaciones de dominancia de Pareto p
 \newline
 
 El enfoque de métricas convierte el problema multiobjetivo en un problema mono objetivo que maximiza el valor de métricas que permitan definir si el conjunto de soluciones es de buena calidad y  tiene buena dispersión, una métrica popular es el hipervolúmen ya que permite saber al mismo tiempo si se tiene cierta convergencia y dispersión. Sin embargo, calcular estas metricas se vuelve costoso conforme aumentan las dimensiones del problema multiobjetivo original, por ejemplo, la mejor forma conocidad de calcular el hipervolúmen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de puntos en el frente y $m$ las dimensiones de los mismos. 
-
 \newline
 
-Es importante hacer notar ... 
+Es importante hacer notar ... \emph{Ideas sobre los enfoques de descomposición y dominancia y los la geometria del  simplejo y los nichos??} 
 \newline
 
 \subsection{Estado del arte del \emph{MOP}}
@@ -140,16 +139,16 @@ Klastorin (1979) desarrolló un algoritmo heurístico de dos etapas utilizando u
  	
 \section{Justificación}
 
-Debido a que el \emph{PAG} pertenece a la clase NP-Duro \cite{4358754}; ha sido  resuelto por diferentes métodos heurísticos con el fin de obtener una solución en un tiempo razonable.
-
-Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización \cite{4358754} .
+% Debido a que el \emph{PAG} pertenece a la clase NP-Duro \cite{4358754}; ha sido  resuelto por diferentes métodos heurísticos con el fin de obtener una solución en un tiempo razonable.
+% 
+Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización multiobjetivo \cite{coello1999comprehensive} .
 \newline
-
- En la actualidad muchas heurísticas han surgido inspiradas por diferentes características de algún tipo  de comportamientos social o agentes diversos en la naturaleza, un subconjunto de estas ha sido desarrollado por imitación de las llamadas inteligencia de enjambre (SI) tales como aves y peces entre otros. La optimización  de enjambre de partículas se basó en el comportamiento de aves y peces \cite{4358754}, mientras que el algoritmo de luciérnagas se basó en el patrón intermitente de las luciérnagas tropicales \cite{4358754}, \cite{4358754}.
-\newline
- 	
-Los algoritmos de luciérnagas (FA), gravitación universal (GSA) y el método de composición musical (MMC), los cuales fueron diseñados para ser aplicados a problemas de optimización continua,  han sido adaptados para problemas de optimización discreta \cite{4358754}, \cite{4358754}, \cite{4358754}. 
-Para el \emph{PAG} aún no han sido implementados estos tres métodos heurísticos, es por esa razón que se utilizarán en este trabajo con el fin de reportar su comportamiento, así mismo se compararán con algunas de las técnicas de las existentes en la literatura, en cuestión de calidad de la solución y tiempo de respuesta; para este trabajo se utilizarán las instancias de P. C. Chu y J. E. Beasley planteados en \cite{4358754}, los archivos se encuentran disponibles en \textbf{OR-Library} \cite{4358754}.
+% 
+%  En la actualidad muchas heurísticas han surgido inspiradas por diferentes características de algún tipo  de comportamientos social o agentes diversos en la naturaleza, un subconjunto de estas ha sido desarrollado por imitación de las llamadas inteligencia de enjambre (SI) tales como aves y peces entre otros. La optimización  de enjambre de partículas se basó en el comportamiento de aves y peces \cite{4358754}, mientras que el algoritmo de luciérnagas se basó en el patrón intermitente de las luciérnagas tropicales \cite{4358754}, \cite{4358754}.
+% \newline
+%  	
+% Los algoritmos de luciérnagas (FA), gravitación universal (GSA) y el método de composición musical (MMC), los cuales fueron diseñados para ser aplicados a problemas de optimización continua,  han sido adaptados para problemas de optimización discreta \cite{4358754}, \cite{4358754}, \cite{4358754}. 
+% Para el \emph{PAG} aún no han sido implementados estos tres métodos heurísticos, es por esa razón que se utilizarán en este trabajo con el fin de reportar su comportamiento, así mismo se compararán con algunas de las técnicas de las existentes en la literatura, en cuestión de calidad de la solución y tiempo de respuesta; para este trabajo se utilizarán las instancias de P. C. Chu y J. E. Beasley planteados en \cite{4358754}, los archivos se encuentran disponibles en \textbf{OR-Library} \cite{4358754}.
 
 \section{Objetivo General}
 
@@ -187,6 +186,8 @@ Es un algoritmo de optimización inspirado en las tecnicas de descomposion y los
  \end{itemize}
  
 Existen cuestiones importantes del \emph{MOEA/D} asociado con la geometria del problema de programación no lineal \cite{4358754}:
+
+TODO
 % \begin{itemize}
 % \item La variación de la intensidad de la luz o el brillo I(r) varia de acuerdo a la ley del inverso cuadrado.
 % \begin{equation} I(r)= \frac{I_{s}}{r^{2}} \end{equation}
@@ -241,6 +242,8 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 
 \section{Marco de Trabajo NSGA-III}
 
+El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}, 
+
 % La ley de Gravitación Universal fue publicada en 1687 por Isaac Newton. El \emph{GSA} fue introducido por Esmat Rashedi et al. (2009) \cite{4358754} donde se muestra un algoritmo de búsqueda poblacional basado en las reglas de la gravitación universal donde se da una breve descripción de la fuerza gravitacional para proporcionar un medio apropiado y seguido por la explicación de \emph{ GSA}.  
 % 
 % \subsection{Ley de la gravitación}
@@ -279,47 +282,48 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 % La posición de la masa corresponde a una solución del problema y las masas de inercia y gravitacional son determinadas utilizando la función objetivo o función aptitud, en otras palabras cada masa representa una solución y el algoritmo navega ajustando correctamente las masas gravitacionales y la inercia, con el transcurso de tiempo, esperando que las masas sean atraídas por las masas más pesadas, éstas representan una mejor solución en el espacio de búsqueda.
 % 
 \subsection{Pseudocódigo NSGA-III}
-%   \centering
-%    \scalebox{.65}{
-%     \begin{algorithm}[H]
-%    \caption{Algoritmo NSGA-III}
-%    %\SetLine
-%     \KwData{$K$:puntos de referencia estructurados $\bm{Z}^{(K)}$, $NumObjetivos$, $P_{crossover}$, $P_{mutation}$}
-%     \KwResult{$Hijos$}
-% Poblacion $\leftarrow$ InitializePoblacion($Poblacion_{size}$, ProblemSize)\;
-% EvaluateAgainstObjectiveFunctions(Poblacion)\;
-% FastNondominatedSort(Poblacion)\;
-% Seleccion $\leftarrow$ SelectPadresByRank(Poblacion, $Poblacion_{size}$)\;
-% Hijos $\leftarrow$ CrossoverAndMutation(Seleccion, $P_{crossover}$, $P_{mutation}$)\;
-% \While{$\neg$Paro()}{
-% EvaluateAgainstObjectiveFunctions(Hijos)\;
-% Union $\leftarrow$ Merge(Poblacion, Hijos)\;
-% Frentes $\leftarrow$ FastNondominatedSort(Union)\;
-% Padres $\leftarrow \emptyset$\;
-% $Frente_L$ $\leftarrow \emptyset$\;
-% \For {$Frente_i$ $\in$ Frentes}{
-% CrowdingDistanceAssignment($Frente_i$)\;
-% \eIf{$Size(Padres)+Size(Frente_i) > Poblacion_{size}$}{
-% $Frente_L$ $\leftarrow$ $i$\;
-% Break()\;
+% \centering
+%     \scalebox{.65}{
+%      \begin{algorithm}[H]
+%     \caption{Algoritmo NSGA-III}
+%     
+% \KwData{$K$:puntos de referencia estructurados $\bm{Z}^{(K)}$, $NumObjetivos$, $P_{crossover}$, $P_{mutation}$}
+% \KwResult{$Hijos$}
+%  Poblacion $\leftarrow$ InitializePoblacion($Poblacion_{size}$, ProblemSize)\;
+%  EvaluateAgainstObjectiveFunctions(Poblacion)\;
+%  FastNondominatedSort(Poblacion)\;
+%  Seleccion $\leftarrow$ SelectPadresByRank(Poblacion, $Poblacion_{size}$)\;
+%  Hijos $\leftarrow$ CrossoverAndMutation(Seleccion, $P_{crossover}$, $P_{mutation}$)\;
+%  \While{$\neg$Paro()}{
+%  EvaluateAgainstObjectiveFunctions(Hijos)\;
+%  Union $\leftarrow$ Merge(Poblacion, Hijos)\;
+%  Frentes $\leftarrow$ FastNondominatedSort(Union)\;
+%  Padres $\leftarrow \emptyset$\;
+%  $Frente_L$ $\leftarrow \emptyset$\;
+%  \For {$Frente_i$ $\in$ Frentes}{
+%   Niching($Frente_i$)\;
+%  \eIf{$Size(Padres)+Size(Frente_i) > Poblacion_{size}$}{
+%  $Frente_L$ $\leftarrow$ $i$\;
+%  Break()\;
+%  }
+%  }
+%   Padres $\leftarrow$ Merge(Padres, $Frente_i$)\;
+%  \If {$Size(Padres) < Poblacion_{size}$}{
+%  $Frente_L$ $\leftarrow$ SortByRankAndDistance($Frente_L$)\;
+%  \For {$P_1$ To $P_{Poblacion_{size} - Size_{Frente_L}}$}{
+%  Padres $\leftarrow$ $Pi$
+%  }
+%  }
+%  Seleccion $\leftarrow$ SelectPadresByRankAndDistance(Padres, $Poblacion_{size}$)\;
+%  Poblacion  $\leftarrow$ Hijos\;
+%  Hijos $\leftarrow$ CrossoverAndMutation(Seleccion, $P_{crossover}$, $P_{mutation}$)\;
 % }
-% {
-% Padres $\leftarrow$ Merge(Padres, $Frente_i$)\;
-% }
-% }
-% \If {$Size(Padres) < Poblacion_{size}$}{
-% $Frente_L$ $\leftarrow$ SortByRankAndDistance($Frente_L$)\;
-% \For {$P_1$ To $P_{Poblacion_{size} - Size_{Frente_L}}$}{
-% Padres $\leftarrow$ $Pi$
-% }
-% }
-% Seleccion $\leftarrow$ SelectPadresByRankAndDistance(Padres, $Poblacion_{size}$)\;
-% Poblacion  $\leftarrow$ Hijos\;
-% Hijos $\leftarrow$ CrossoverAndMutation(Seleccion, $P_{crossover}$, $P_{mutation}$)\;
-% }
-% \Return (Hijos)
+%  \Return (Hijos)
 % \end{algorithm}}
-
+\begin{figure}[h]
+ \centering
+\includegraphics[scale=0.35]{nsgaiiiP.png}
+\end{figure}
 
 \section{Metodología}
 
