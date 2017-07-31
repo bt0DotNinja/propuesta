@@ -17,11 +17,11 @@
 \usepackage{xparse}
 \usepackage{mathtools}
 \usepackage{bm}
-\usepackage{draftwatermark}
+%\usepackage{draftwatermark}
 
-\SetWatermarkText{\textsc{Borrador}}
-\SetWatermarkScale{5}
-\SetWatermarkAngle{55}
+%\SetWatermarkText{\textsc{Borrador}}
+%\SetWatermarkScale{5}
+%\SetWatermarkAngle{55}
 %%%
 % \usepackage{ragged2e}
 % \usepackage{pstricks,enumerate}
@@ -82,20 +82,21 @@ El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran inter�
  \item Métricas
 \end{itemize}
 
-El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalares y suele introducir técnicas poblacionales para la resolución simultánea de ellos, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad, dejando la convergencia al sub método de resolución.Un marco de trabajo moderno con este enfoque es \emph{MOEA/D}.
+El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalares y suele introducir técnicas poblacionales para la resolución simultánea de ellos, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad, dejando la convergencia al sub método de resolución.Un marco de trabajo moderno con este enfoque es \emph{MOEA/D}\cite{4358754}.
 \newline
 
-En el enfoque de dominancia se utilizan las relaciones de dominancia de Pareto para inducir un orden parcial en el espacio de los objetivos y de esta manera decidir cuándo una solución en dicho espacio es comparable con otra y de serlo cual es mejor, dicho orden parcial está limitado en espacios de altas dimensiones puesto que gran cantidad de soluciones seran no comparables merma la efectividad de los procedimientos de selección. \emph{NSGA-III} un marco de trabajo moderno con este enfoque incorpora técnicas de nichos para sortear este problema.
+En el enfoque de dominancia se utilizan las relaciones de dominancia de Pareto para inducir un orden parcial en el espacio de los objetivos y de esta manera decidir cuándo una solución en dicho espacio es comparable con otra y de serlo cual es mejor, dicho orden parcial está limitado en espacios de altas dimensiones puesto que gran cantidad de soluciones serán no comparables merma la efectividad de los procedimientos de selección. \emph{NSGA-III} un marco de trabajo moderno con este enfoque incorpora técnicas de nichos para sortear este problema.
 \newline
 
 El enfoque de métricas convierte el problema multiobjetivo en un problema mono objetivo que maximiza el valor de métricas que permitan definir si el conjunto de soluciones es de buena calidad y  tiene buena dispersión, una métrica popular es el hipervolumen ya que permite saber al mismo tiempo si se tiene cierta convergencia y dispersión. Sin embargo, calcular estas métricas se vuelve costoso conforme aumentan las dimensiones del problema multiobjetivo original, por ejemplo, la mejor forma conocida de calcular el hipervolumen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de puntos en el frente y $m$ las dimensiones de los mismos.
 \newline
 
-Es importante hacer notar ... \emph{Ideas sobre los enfoques de descomposición y dominancia y los la geometría del  simplejo y los nichos??}
-\newline
-
-{\huge TODO}
-
+Las técnicas específicas de nichos y optimización multimodal son usadas ampliamente en algoritmos en Optimización multiobjetivo para preservar la diversidad, por ejemplo:
+ \begin{itemize}
+  \item Compartición de Aptitud ({\em Fitness Sharing}): Es una técnica de Nichos que se basa en la idea de que cada individuo comparte los recursos disponibles en el nicho.
+  \item Apareamiento Restringido ({\em Restricted Mating}): No basada en nichos, permite que dos individuos se cruzan sólo si están dentro a una distancia específica.  
+ \end{itemize}
+ 
 \subsection{Estado del arte del \emph{MOP}}
 
 El Problema de Optimización Multiobjetivo (MOP) (llamado también
@@ -152,6 +153,9 @@ Por ser el \emph{MOP} un problema ampliamente estudiado se han propuesto varios 
 %
 Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización multiobjetivo \cite{coello1999comprehensive} .
 \newline
+
+{\huge TODO}
+
 %
 %  En la actualidad muchas heurísticas han surgido inspiradas por diferentes características de algún tipo  de comportamientos social o agentes diversos en la naturaleza, un subconjunto de estas ha sido desarrollado por imitación de las llamadas inteligencia de enjambre (SI) tales como aves y peces entre otros. La optimización  de enjambre de partículas se basó en el comportamiento de aves y peces \cite{4358754}, mientras que el algoritmo de luciérnagas se basó en el patrón intermitente de las luciérnagas tropicales \cite{4358754}, \cite{4358754}.
 % \newline
@@ -372,7 +376,7 @@ Los experimentos consistirán en la medición de la calidad de las soluciones da
 \begin{table}[H]
 \centering
 
-\label{my-label}
+\label{tablaTiempos}
 \scalebox{0.9}{\begin{tabular}{|l|c|c|c|c|}
 \hline
 \begin{tabular}[c]{@{}c@{}}Nombre\\   de la tarea\end{tabular} & Fecha de Inicio & Fecha final & \% Completado & Duración \\ \hline
@@ -391,7 +395,7 @@ Entrega de tesis                                               & XX/XX/17       
 
 \begin{table}[H]
 \centering
-\label{my-label}
+\label{miOtraTabla}
 \scalebox{0.6}{\begin{tabular}{|l|l|}
 \hline
 Nombre de la tarea                 & \multicolumn{1}{c|}{Metas alcanzar al terminar la tarea}                                                                                                                                                                                                                                                                                                                                                            \\ \hline
