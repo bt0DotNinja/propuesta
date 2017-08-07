@@ -133,26 +133,31 @@ Buscamos el vector $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimice la función $\ove
 Por ser el \emph{MOP} un problema ampliamente estudiado se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposición como:
 \newline
 
-{\huge TODO}
 
+\begin{itemize}
+ \item Cheng He, Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si en la superficie del frente es cóncava, convexa o un hiperplano, esto para numerosas subregiones generando experimentalmente un conjunto de puntos mejor distribuido (spacing metric) que el método de referencia de Das and Dennis.\cite{7748353}.	
+ \item T. C. Chiang and Y. P. Lai (2011) Consideran dos cambios fundamentalme en la estructura de MOEA/D y MOEA/D-DE, el primero es crear un criterio de selección del subproblema a resolver si es que este no se ha considerado resuelto (sin mejora tras cierto número de iteraciones, agrega un criterio adicional para volverlo a marcar sin resolver) esto con el fin de redistribuir el tiempo de computo solo en los problemas aun si resolver, la segunda adición es la restricción de cruza a los individuos en el espacio de las variables de decisión en lugar del espacio de los objetivos, sin embargo, la generación de los nichos (mating pool en el paper) requiere ajustar dos parámetros adicionales que disparan un proceso de agrupamiento computacionalmente costoso $O(nN^2)$.\cite{5949789}
+ \item B. Liu and F. V. Fernández, et al, (2010) Utilizan una variante de MOEA/D que substituye al algoritmo genético por evolución diferencial (DE/best/1/bin) buscan mejorar la diversidad usando un factor de escalamiento aleatorio en la evolución diferencial además de restringir la cruza permitiendo aleatoriamente cruza con individuos fuera de la vecindad. Utilizan descomposición por el método de Tchebycheff. \cite{5585957}
+ \item S. Z. Zhao and P. N. Suganthan and Q. Zhang (2010) Propone calcular el tamaño de vecindario en MOEA/D de forma dinámica, generando un ranking de cuales estadísticamente dan mejores resultados, y esto se recalcula cada cierto número de generaciones dado como parámetro, durante estas generaciones se vuelve a realizar el ranking (periodo de aprendizaje) siendo entonces el tamaño de vecindario auto-adaptativo. \cite{6151117} 
+\end{itemize}
 
+En el caso de el enfoque de dominancia encontramos los siguientes trabajos:
+
+\begin{itemize}
+ \item Haitham Seada, Kalyanmoy Deb (2015) Propone un algoritmo basado en NSGA-III capaz de adaptarse y funcionar bien en problemas multiobjetivo, mono objetivo y de muchos objetivos ajustando los parametros del algoritmo segun la dimesion.\cite{a0ecee762d9f4867a9ded8de598c732e}
+ \item Haitham Seada, Kalyanmoy Deb (2015) realizan el estudio sobrela restricción del tamaño de la población impuesto en el NSGA-III original y propone una aproximación que solventa esa deficiencia aprovechando las técnicas de nichos. \cite{7257251}
+ \item Giagkiozis and R.C. Purshouse and P.J. Fleming () Proponen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyan puntos de referencia acorde a la geometría del frente de Pareto de tal manera que se maximice el indicador de hipervolumen, CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente. \cite{Giagkiozis2014363}
+\end{itemize}
 
 \section{Justificación}
 
-% Debido a que el \emph{PAG} pertenece a la clase NP-Duro \cite{4358754}; ha sido  resuelto por diferentes métodos heurísticos con el fin de obtener una solución en un tiempo razonable.
-%
-Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización multiobjetivo \cite{coello1999comprehensive}.
+Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización multiobjetivo \cite{coello1999comprehensive} aproximando el frente real con exito.
 \newline
-De esta forma proporicionan un marco de trabajo accesible comptacionalente parea encontrar 
 
-{\huge TODO}
+De esta forma proporcionan un marco de trabajo accesible computacionalmente para encontrar soluciones de buena calidad que además sean diversas, permitiendo a la persona o sistema tomar la decisión adecuada conforme a los criterios que crean pertinentes. 
+\newline
 
-%
-%  En la actualidad muchas heurísticas han surgido inspiradas por diferentes características de algún tipo  de comportamientos social o agentes diversos en la naturaleza, un subconjunto de estas ha sido desarrollado por imitación de las llamadas inteligencia de enjambre (SI) tales como aves y peces entre otros. La optimización  de enjambre de partículas se basó en el comportamiento de aves y peces \cite{4358754}, mientras que el algoritmo de luciérnagas se basó en el patrón intermitente de las luciérnagas tropicales \cite{4358754}, \cite{4358754}.
-% \newline
-%      
-% Los algoritmos de luciérnagas (FA), gravitación universal (GSA) y el método de composición musical (MMC), los cuales fueron diseñados para ser aplicados a problemas de optimización continua,  han sido adaptados para problemas de optimización discreta \cite{4358754}, \cite{4358754}, \cite{4358754}.
-% Para el \emph{PAG} aún no han sido implementados estos tres métodos heurísticos, es por esa razón que se utilizarán en este trabajo con el fin de reportar su comportamiento, así mismo se compararán con algunas de las técnicas de las existentes en la literatura, en cuestión de calidad de la solución y tiempo de respuesta; para este trabajo se utilizarán las instancias de P. C. Chu y J. E. Beasley planteados en \cite{4358754}, los archivos se encuentran disponibles en \textbf{OR-Library} \cite{4358754}.
+El presente trabajo adquiere importancia con el estudio de los mecanismos que buscan preservar la diversidad de las soluciones en los principales marcos de trabajo en el estado del arte de \emph{MOP}.  
 
 \section{Objetivo General}
 
@@ -175,7 +180,7 @@ Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instan
  
 \item Adaptar, implementar y describir el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
 
-\item Comparar los resultados obtenidos de las dos heurísticas con algunos resultados obtenidos en la literatura.
+\item Comparar los resultados obtenidos de las dos metaheurísticas con algunos resultados obtenidos en la literatura.
 
 \item Identificar las ventajas y desventajas de los algoritmos implementados con respecto a las métricas de diversidad.
 \end{itemize}
@@ -183,36 +188,15 @@ Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instan
 \section{Marco de Trabajo MOEA/D}
 El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007. \cite{4358754}
  
-Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos, que se basa en el descomponer un problema multiobjetivo en $N$ problemas de optimización escalares y resolverlos simultáneamente, de esta manera se caracteriza por tener las siguientes características
+Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos, al descomponer un problema multiobjetivo en $N$ problemas de optimización escalares y resolverlos simultáneamente, de esta manera se distingue por tener las siguientes características
  \begin{itemize}
  \item Tecnicas de analisis geometrico sobre el simplejo del problema \cite{mie99,Das:1998:NIN:588907.589322, Messac2003}
  \item Mejora de soluciones hasta óptimos locales/globales garantizados por el teorema de Holland\cite{Holland:1992:ANA:531075}
  \end{itemize}
  
-Existen cuestiones importantes del \emph{MOEA/D} asociado con la geometria del problema de programación no lineal \cite{4358754}:
+Existen cuestiones importantes del \emph{MOEA/D} asociadoas con la geometria del frente  \cite{4358754}:
 
-% \begin{itemize}
-% \item La variación de la intensidad de la luz o el brillo I(r) varía de acuerdo a la ley del inverso cuadrado.
-% \begin{equation} I(r)= \frac{I_{s}}{r^{2}} \end{equation}
-% \item Donde $I_{s}$ es la intensidad de la fuente, para una media dada con un ajuste del coeficiente de absorción de luz  \emph{$\gamma$}, la intensidad de la luz \emph{I} varía con la distancia \emph{r}=. Esto es      
-% \begin{equation} I= I_{0}{e^{\gamma r}} \end{equation}
-% \item Donde $I_{0}$ es la intensidad de luz original, en el caso singular donde $r=0$  en la expresión  $I(r)= \frac{I_{s}}{r^{2}}$, el efecto combinado de la ley del cuadrado inverso y la absorción puede aproximarse de la siguiente forma Gaussiana.
-% \begin{equation} I= I_{0}{e^{\gamma r^{2}}}  \end{equation}
-% \item La formulación de atractivo \begin{math}\beta\end{math}
-%
-% \begin{equation} \beta= \beta_{0}{e^{\gamma r^{2}}}\end{equation}
-%
-%
-% \item La distancia entre dos luciérnagas cualesquiera \emph{i} y \emph{j} y respectivamente  $x_{i}$ y $x_{j}$, es la distancia cartesiana.
-%
-% \begin{equation} r_{i,j}= ||x_{i} - x_{j}||= \sqrt{ \sum_{k=1}^{d}(x_{i,k} - x_{j,k})}\end{equation}
-% \end{itemize}
-% En \cite{yang2010nature} idealizan las características de los destellos de las luciérnagas para desarrollar el \emph{FA}.
-%
-% El movimiento de una luciérnaga \emph i con localización \begin{math}x_{i}\end{math} atraída por otra luciérnaga j más brillante y localización \begin{math}x_{j}\end{math} está determinada por:
-% \begin{center}
-% \begin{equation} x_{i}(t+1)=x_{i}(t)+ \beta_{0}{e^{\gamma {r_{i,j}^2}}}(x_{j} - x_{i})+\alpha\varepsilon_{i} \end{equation}
-% \end{center}
+
 
 
 \subsection{Pseudocódigo MOEA/D}
