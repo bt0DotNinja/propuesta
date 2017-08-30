@@ -1,6 +1,6 @@
 \documentclass[letterpaper,10pt]{article}
 %paquetes
-\usepackage[spanish, es-tabla]{babel}%formato de las tablas
+\usepackage[spanish, es-noquoting]{babel}%formato de las tablas
 \usepackage[utf8]{inputenc}
 \usepackage{enumerate}
 \usepackage{graphicx}
@@ -41,8 +41,8 @@
 \title{Propuesta Alberto Rodríguez Sánchez}
 
 \begin{document}
-\renewcommand{\refname}{Bibliografía}%%pone en lugar de referencias bibliografía esta dentro porque se ocupap babel en otro caso iria afuera.
-% Pagina sin estilo para portada quitar encabezado, pie y número de página
+\renewcommand{\refname}{Bibliografía}.
+% Página sin estilo para portada quitar encabezado, pie y número de página
 \thispagestyle{empty}
 
 \begin{center}
@@ -63,8 +63,8 @@
     \vspace{1.5cm}
     \bigskip
     {\large\textbf{Asesores:}}\\
-    Dr. Antonin Ponsich Sebastien\\
-    Dr. Hannibal Lecter\\
+    Dr. Antonin Ponsich\\
+    
     \vspace{1.5cm}
      2017\\
     \vspace{1.0cm}
@@ -75,30 +75,53 @@
 \newpage
 \section{Introducción}
 
-El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial; ya que, es común encontrar problemas que requieren considerar múltiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc, donde estos objetivos se encuentran en conflicto y se puede encontrar inmerso en diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros. Desde el punto vista Metaheurístico se han generado tres grandes ramas para resolver el \emph{MOP}:
+El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial, ya que son comunes aquellos problemas que requieren
+considerar múltiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc. Estos objetivos se encuentran típicamente en conflicto y se puede encontrar inmersos en
+diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros.\\
+
+Si esta clase de problemas ha sido tradicionalmente atacada reduciendo el MOP en un problema mono-objetivo (estrategia de suma agregativa ponderada, de restricciones-eps,
+de programación por metas), desde los años 1990, los esfuerzos de investigación se han dedicado al desarrollo de técnicas heurísticas, y particularmente Algoritmos Evolutivos (AEs).
+Desde el punto vista metaheurístico se han generado tres grandes enfoques para resolver el \emph{MOP}:
 
 \begin{itemize}
- \item Descomposición
- \item Dominancia
- \item Métricas
+ \item Basado en descomposición
+ \item Basado en dominancia
+ \item Basado en métricas
 \end{itemize}
 
-El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalares y suele introducir técnicas poblacionales para la resolución simultánea de ellos, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad, dejando la convergencia al sub método de resolución.Un marco de trabajo moderno con este enfoque es \emph{MOEA/D}\cite{4358754}.
+El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalar y suele introducir técnicas poblacionales para
+la resolución simultánea de ellos. Bajo este enfoque, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad del conjunto
+de soluciones arrojado, dejando la convergencia al sub método de resolución. Un marco de trabajo moderno con este enfoque es el algoritmo evolutivo multiobjetivo basado en
+descomposición (\emph{MOEA/D})\cite{4358754}.
 \newline
 
-En el enfoque de dominancia se utilizan las relaciones de dominancia de Pareto para inducir un orden parcial en el espacio de los objetivos y de esta manera decidir cuándo una solución en dicho espacio es comparable con otra y de serlo cual es mejor, dicho orden parcial está limitado en espacios de altas dimensiones puesto que gran cantidad de soluciones serán no comparables merma la efectividad de los procedimientos de selección. \emph{NSGA-III} un marco de trabajo moderno con este enfoque incorpora técnicas de nichos para sortear este problema.
+En el enfoque de dominancia, se utilizan las relaciones de dominancia para inducir un orden parcial en el espacio de los objetivos y, de esta manera, decidir cuándo una solución
+en dicho espacio es comparable con otra y, en este caso, cuál es la mejor. Cabe mencionar que dicho orden parcial está limitado en espacios de altas dimensiones puesto que gran
+cantidad de soluciones serán no comparables, mermando en consecuencia la efectividad de los procedimientos de selección. El algoritmo genético de ordenamiento no dominado
+(\emph{NSGA-III})\cite{6600851} es un marco de trabajo moderno con este enfoque, que incorpora además técnicas de nichos para mantener la diversidad.
 \newline
 
-El enfoque de métricas convierte el problema multiobjetivo en un problema mono objetivo que maximiza el valor de métricas que permitan definir si el conjunto de soluciones es de buena calidad y  tiene buena dispersión, una métrica popular es el hipervolumen ya que permite saber al mismo tiempo si se tiene cierta convergencia y dispersión. Sin embargo, calcular estas métricas se vuelve costoso conforme aumentan las dimensiones del problema multiobjetivo original, por ejemplo, la mejor forma conocida de calcular el hipervolumen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de puntos en el frente y $m$ las dimensiones de los mismos.
+Finalmente, el enfoque basado en métricas convierte el problema multiobjetivo original en un problema mono objetivo diferente que optimiza el valor de métricas de desempeño,
+representando la calidad del conjunto de soluciones obtenidas tanto en términos de convergencia como de dispersión y uniformidad de su distribución. Una métrica popular
+es el hipervolumen ya que es la única acorde a la definición de  optimalidad de Pareto (i.e., las soluciones Pareto-óptimas son aquellas que maximizan el hipervolumen).
+Sin embargo, calcular el hipervolumen se vuelve costoso conforme aumenta la dimensión del problema multiobjetivo original, por ejemplo, la mejor forma conocida de calcular
+el hipervolumen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de soluciones aproximadas y $m$ el número de objetivos.
 \newline
 
-Las técnicas específicas de nichos y optimización multimodal son usadas ampliamente en algoritmos en Optimización multiobjetivo para preservar la diversidad, por ejemplo:
- \begin{itemize}
-  \item Compartición de Aptitud ({\em Fitness Sharing}): Es una técnica de Nichos que se basa en la idea de que cada individuo comparte los recursos disponibles en el nicho.
-  \item Apareamiento Restringido ({\em Restricted Mating}): No basada en nichos, permite que dos individuos se cruzan sólo si están dentro a una distancia específica.  
- \end{itemize}
+Un conjunto de soluciones candidatas entregadas por cualquiera de los enfoques antes mencionados debe de cumplir con criterios de convergencia y diversidad para ser
+considerados aceptables. Esta meta de obtener un conjunto de soluciones diversas y uniformemente distribuidas se ve dificultada cuando los métodos de solución deben lidiar con:
+
+\begin{itemize}
+ \item Convexidad o no convexidad del frente óptimo de Pareto.
+ \item Discontinuidad del frente óptimo de Pareto.
+ \item Densidad no uniforme de las soluciones en el frente óptimo de pareto.
+\end{itemize}
+
+En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que si bien, han estudiado distintos métodos para generarlos,
+sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo, es adecuado entonces, investigar técnicas que permitan los puntos/vectores
+de referencia con el fin de mejorar la diversidad del conjunto solución final.
  
-\subsection{Estado del arte del \emph{MOP}}
+\section{Planteamiento del problema}
 
 El Problema de Optimización Multiobjetivo (MOP) (llamado también
 multicriterio o vectorial) puede definirse como el problema de
@@ -118,88 +141,48 @@ diferente al del caso de problemas mono-objetivo.
 \subsection{Formulación Matemática}
 El problema de Optimización Multiobjetivo (MOP) se define en su forma general de la siguiente manera:
  
-$$\min \overrightarrow{F(\bm{x})} = \left[ \overrightarrow{f_1(\bm{x})}, \overrightarrow{f_2(\bm{x})} , \dots, \overrightarrow{f_n(\bm{x})} \right] $$
+$$\min \overrightarrow{F(\bm{x})} = \left[ f_1(\bm{x}), f_2(\bm{x}) , \dots, f_n(\bm{x}) \right] $$
 S.A:
  
 $$g_i(\bm{x}) \leq 0, i=1,2,\dots,m$$
-$$h_i(\bm{x}) = 0, i=1,2,\dots,p$$
- 
+$$h_j(\bm{x}) = 0, j=1,2,\dots,p$$
+$$x \in \Omega \subset \mathbb{R}$$
 Buscamos el vector $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimice la función $\overrightarrow{F}$
 
-\newpage
+\subsubsection{Dominancia de Pareto}
+
+Un vector $\overrightarrow{U}= (u_1 ,\dots, u_k )$ domina a otro $\overrightarrow{V}= (v_1 ,\dots, v_k )$ (denotado mediante $\overrightarrow{U} \preceq \overrightarrow{V}$ ) si y sólo si $\overrightarrow{U}$ es parcialmente menor que $\overrightarrow{V}$ , es decir,
+$\forall i \in (1,\dots, k), u_i \leq v_i$ y $\exists i \in (1,\dots, k),  u_i<v_i$.
+
+Donde $\overrightarrow{U}$ y $\overrightarrow{V}$ se encuentran en el espacio de los objetivos.
  
-\subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
+\subsubsection{Optimalidad de Pareto}
 
-Por ser el \emph{MOP} un problema ampliamente estudiado se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposición como:
-\newline
-
-
-\begin{itemize}
- \item Cheng He, Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si en la superficie del frente es cóncava, convexa o un hiperplano, esto para numerosas subregiones generando experimentalmente un conjunto de puntos mejor distribuido (spacing metric) que el método de referencia de Das and Dennis.\cite{7748353}.	
- \item T. C. Chiang and Y. P. Lai (2011) Consideran dos cambios fundamentalme en la estructura de MOEA/D y MOEA/D-DE, el primero es crear un criterio de selección del subproblema a resolver si es que este no se ha considerado resuelto (sin mejora tras cierto número de iteraciones, agrega un criterio adicional para volverlo a marcar sin resolver) esto con el fin de redistribuir el tiempo de computo solo en los problemas aun si resolver, la segunda adición es la restricción de cruza a los individuos en el espacio de las variables de decisión en lugar del espacio de los objetivos, sin embargo, la generación de los nichos (mating pool en el paper) requiere ajustar dos parámetros adicionales que disparan un proceso de agrupamiento computacionalmente costoso $O(nN^2)$.\cite{5949789}
- \item B. Liu and F. V. Fernández, et al, (2010) Utilizan una variante de MOEA/D que substituye al algoritmo genético por evolución diferencial (DE/best/1/bin) buscan mejorar la diversidad usando un factor de escalamiento aleatorio en la evolución diferencial además de restringir la cruza permitiendo aleatoriamente cruza con individuos fuera de la vecindad. Utilizan descomposición por el método de Tchebycheff. \cite{5585957}
- \item S. Z. Zhao and P. N. Suganthan and Q. Zhang (2010) Propone calcular el tamaño de vecindario en MOEA/D de forma dinámica, generando un ranking de cuales estadísticamente dan mejores resultados, y esto se recalcula cada cierto número de generaciones dado como parámetro, durante estas generaciones se vuelve a realizar el ranking (periodo de aprendizaje) siendo entonces el tamaño de vecindario auto-adaptativo. \cite{6151117} 
-\end{itemize}
-
-En el caso de el enfoque de dominancia encontramos los siguientes trabajos:
-
-\begin{itemize}
- \item Haitham Seada, Kalyanmoy Deb (2015) Propone un algoritmo basado en NSGA-III capaz de adaptarse y funcionar bien en problemas multiobjetivo, mono objetivo y de muchos objetivos ajustando los parametros del algoritmo segun la dimesion.\cite{a0ecee762d9f4867a9ded8de598c732e}
- \item Haitham Seada, Kalyanmoy Deb (2015) realizan el estudio sobrela restricción del tamaño de la población impuesto en el NSGA-III original y propone una aproximación que solventa esa deficiencia aprovechando las técnicas de nichos. \cite{7257251}
- \item Giagkiozis and R.C. Purshouse and P.J. Fleming () Proponen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyan puntos de referencia acorde a la geometría del frente de Pareto de tal manera que se maximice el indicador de hipervolumen, CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente. \cite{Giagkiozis2014363}
-\end{itemize}
-
-\section{Justificación}
-
-Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización multiobjetivo \cite{coello1999comprehensive} aproximando el frente real con exito.
-\newline
-
-De esta forma proporcionan un marco de trabajo accesible computacionalmente para encontrar soluciones de buena calidad que además sean diversas, permitiendo a la persona o sistema tomar la decisión adecuada conforme a los criterios que crean pertinentes. 
-\newline
-
-El presente trabajo adquiere importancia con el estudio de los mecanismos que buscan preservar la diversidad de las soluciones en los principales marcos de trabajo en el estado del arte de \emph{MOP}.  
-
-\section{Objetivo General}
-
-Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instancias de prueba, las cuales se encuentran disponibles en \cite{zhang2008multiobjective} y comparar los resultados obtenidos con algunos reportados en la literatura.
-
-\section{Objetivos Particulares}
-
-\begin{itemize}
-\item Desarrollar al menos una estrategia para generar vectores iniciales de buena calidad para \emph{MOEA/D} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
-
-\item Desarrollar al menos una estrategia de actualización de vectores de pesos para el método \emph{MOEA/D}.
-
-\item Desarrollar al menos una estrategia para generar puntos de referencia iniciales de buena calidad para \emph{NSGA-III} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
-
-\item Desarrollar al menos una estrategia de actualización de puntos de referencia para el método \emph{NSGA-III}.
-
-\item Integrar la estrategia de repulsion de subpoblaciones\cite{ahrari2016multimodal} a los métodos \emph{MOEA/D} y \emph{NSGA-III}.
-
-\item Adaptar, implementar y describir el comportamiento del método \emph{MOEA/D} para las instancias seleccionadas.
+Para un problema multiobjetivo dado $\overrightarrow{f(x)}$, el conjunto de óptimos de Pareto ($P^*$) se define como:
+$$P^* = ( x \in \Omega | \not\exists x_0 \in \Omega \; : \; \overrightarrow{f(x_0)} \preceq \overrightarrow{f(x)})$$
  
-\item Adaptar, implementar y describir el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
+\subsection{Calidad de un conjunto de soluciones del MOP}
+ 
+Hay al menos dos características que debe cumplir un conjunto de soluciones de un problema multiobjetivo:
 
-\item Comparar los resultados obtenidos de las dos metaheurísticas con algunos resultados obtenidos en la literatura.
-
-\item Identificar las ventajas y desventajas de los algoritmos implementados con respecto a las métricas de diversidad.
+\begin{itemize}
+ \item Precisión: Se refiere a la convergencia del conjunto de soluciones no dominadas. Evalúa qué tan lejos se encuentra del
+frente de Pareto óptimo. Cuando el frente de Pareto no se conoce se emplea un conjunto de referencia.
+ \item Diversidad: Miden la distribución y dispersión de las soluciones no dominadas. Distribución se refiere a la distancia relativa entre
+las soluciones encontradas. Mientras que dispersión se refiere al rango de valores cubierto.
 \end{itemize}
 
-\section{Marco de Trabajo MOEA/D}
+\subsection{Marco de Trabajo MOEA/D}
 El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007. \cite{4358754}
  
 Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos, al descomponer un problema multiobjetivo en $N$ problemas de optimización escalares y resolverlos simultáneamente, de esta manera se distingue por tener las siguientes características
  \begin{itemize}
- \item Tecnicas de analisis geometrico sobre el simplejo del problema \cite{mie99,Das:1998:NIN:588907.589322, Messac2003}
+ \item Técnicas de análisis geométrico sobre el simplejo del problema \cite{mie99,Das:1998:NIN:588907.589322, Messac2003}
  \item Mejora de soluciones hasta óptimos locales/globales garantizados por el teorema de Holland\cite{Holland:1992:ANA:531075}
  \end{itemize}
- 
-Existen cuestiones importantes del \emph{MOEA/D} asociadoas con la geometria del frente  \cite{4358754}:
 
 
-
-
-\subsection{Pseudocódigo MOEA/D}
+\subsubsection{Pseudocódigo MOEA/D}
 
    \scalebox{.85}{
     \begin{algorithm}[H]
@@ -226,50 +209,19 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 \Return($PE$)
 \end{algorithm}}
 
-\section{Marco de Trabajo NSGA-III}
+\subsection{Marco de Trabajo NSGA-III}
 
-El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}, es una mejora a NSGA-II para trabajar con problemas de más de  $3$ funciones objetivos. propone sustituir “Crowding distance” por métodos de nichos de tal manera que ayuden a mejorar la diversidad de la población.
+El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}, es una mejora a NSGA-II para trabajar con problemas de más de $3$ funciones objetivos. propone sustituir “Crowding distance” por métodos de nichos de tal manera que ayuden a mejorar la diversidad de la población.
 
-{\huge TODO}
 
-% La ley de Gravitación Universal fue publicada en 1687 por Isaac Newton. El \emph{GSA} fue introducido por Esmat Rashedi et al. (2009) \cite{4358754} donde se muestra un algoritmo de búsqueda poblacional basado en las reglas de la gravitación universal donde se da una breve descripción de la fuerza gravitacional para proporcionar un medio apropiado y seguido por la explicación de \emph{ GSA}.  
-%
-% \subsection{Ley de la gravitación}
-% La gravitación es la tendencia de las masas a acelerar  una hacia otra, esta es una de las cuatro fundamentales interacciones en la naturaleza (las otras son: la fuerza electromagnética, la fuerza nuclear débil y la fuerza nuclear fuerte). Por lo que, cada partícula en el universo atrae a cualquier otra partícula con una ``fuerza gravitacional'' \cite{rashedi2009gsa}.
-% \newline
-%
-% La forma de la fuerza gravitacional de Newton es llamada ``acción distancia'', significa cambios de gravedad entre partículas separadas sin cualquier intermediario y sin demora alguna.
-% \newline
-%
-%  La fuerza gravitacional entre dos partículas es directamente proporcional al producto de sus masas $M_{1}$ y $M_{2}$ e inversamente proporcional al cuadrado de las distancias R entre ellas.
-% \newline
-% \begin{equation}F= \frac{GM_1M_2}{R^2}\end{equation}
-% \newline
-%
-% Donde \emph{F} es la magnitud de la fuerza gravitacional, \emph{G} es la constante gravitacional, \emph{$M_{1}$} y  \emph{$M_{2}$} son las masas de la primera y segunda partícula respectivamente y \emph{R} es la distancia entre las dos partículas.
-% \newline
-%
-%  La segunda ley de Newton dice que cuando una fuerza, ``F'', es aplicada a una partícula, su aceleración ``a'', depende sólo de la fuerza y su masa ``M". \newline
-%  \begin{equation}a= \frac{F}{M}\end{equation}
-%  \newline
-%
-%  Hay una fuerza de atracción entre todas las partículas del universo, donde el efecto de la partícula  más grande y la partícula más pequeña es mayor, por lo que, un incremento en la distancia entre dos partículas significa decrecimiento en la fuerza de gravedad entre ellas.\newline
-%  
-%  Debido al efecto de disminuir la gravedad, el valor actual de la constante gravitacional depende del estado actual del universo, la siguiente fórmula describe     el decrecimiento de la constante gravitacional, ``G'', con el estado:
-%
-% \begin{equation} G(t)=G(t_{0})x(\frac{t_{0}}{t})^\beta, \text{ } \text{ }\beta <1\end{equation}
-%
-% Donde \emph{$G(t)$} es el valor de la constante gravitacional en el tiempo t, \emph{$G(t_{0})$} es el valor de la constante gravitacional en el intervalo de tiempo \emph{$t_{0}$}.
-% \newline
-%
-% En el \emph{GSA} cada masa(Agente) tiene cuatro especificaciones:
-% \begin{itemize}
-% \item[] a) Posición, b) Masa de inercia, c) Masa gravitacional activa, d) Masa gravitacional pasiva.
-% \end{itemize}
-%
-% La posición de la masa corresponde a una solución del problema y las masas de inercia y gravitacional son determinadas utilizando la función objetivo o función aptitud, en otras palabras cada masa representa una solución y el algoritmo navega ajustando correctamente las masas gravitacionales y la inercia, con el transcurso de tiempo, esperando que las masas sean atraídas por las masas más pesadas, éstas representan una mejor solución en el espacio de búsqueda.
-%
-\subsection{Pseudocódigo NSGA-III}
+\begin{itemize}
+ \item Utiliza la noción de Golberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}.
+ \item Utiliza nichos y especialización para generar múltiples puntos sobre el frente de Pareto en lugar de punto por corrida.
+\end{itemize}
+
+
+
+\subsubsection{Pseudocódigo NSGA-III}
  
    \scalebox{.85}{
    \begin{algorithm}[H]
@@ -304,6 +256,66 @@ El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014
   \Return ($P_{t+1}$)
 \end{algorithm}}
 
+
+\subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
+
+Por ser el \emph{MOP} un problema ampliamente estudiado se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposición como:
+\newline
+
+
+\begin{itemize}
+ \item Cheng He, Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si en la superficie del frente es cóncava, convexa o un hiperplano, esto para numerosas subregiones generando experimentalmente un conjunto de puntos mejor distribuido (spacing metric) que el método de referencia de Das and Dennis.\cite{7748353}.    
+ \item T. C. Chiang and Y. P. Lai (2011) Consideran dos cambios fundamentales en la estructura de MOEA/D y MOEA/D-DE, el primero es crear un criterio de selección del subproblema a resolver si es que este no se ha considerado resuelto (sin mejora tras cierto número de iteraciones, agrega un criterio adicional para volverlo a marcar sin resolver) esto con el fin de redistribuir el tiempo de cómputo solo en los problemas aún sin resolver, la segunda adición es la restricción de cruza a los individuos en el espacio de las variables de decisión en lugar del espacio de los objetivos, sin embargo, la generación de los nichos (mating pool en el paper) requiere ajustar dos parámetros adicionales que disparan un proceso de agrupamiento computacionalmente costoso $O(nN^2)$.\cite{5949789}
+ \item B. Liu and F. V. Fernández, et al, (2010) Utilizan una variante de MOEA/D que sustituye al algoritmo genético por evolución diferencial (DE/best/1/bin) buscan mejorar la diversidad usando un factor de escalamiento aleatorio en la evolución diferencial además de restringir la cruza permitiendo aleatoriamente cruza con individuos fuera de la vecindad. Utilizan descomposición por el método de Tchebycheff. \cite{5585957}
+ \item S. Z. Zhao and P. N. Suganthan and Q. Zhang (2010) Propone calcular el tamaño de vecindario en MOEA/D de forma dinámica, generando un ranking de cuales estadísticamente dan mejores resultados, y esto se recalcula cada cierto número de generaciones dado como parámetro, durante estas generaciones se vuelve a realizar el ranking (periodo de aprendizaje) siendo entonces el tamaño de vecindario auto-adaptativo. \cite{6151117}
+\end{itemize}
+
+En el caso de el enfoque de dominancia encontramos los siguientes trabajos:
+
+\begin{itemize}
+ \item Haitham Seada, Kalyanmoy Deb (2015) Propone un algoritmo basado en NSGA-III capaz de adaptarse y funcionar bien en problemas multiobjetivo, mono objetivo y de muchos objetivos ajustando los parámetros del algoritmo según la dimensión.\cite{a0ecee762d9f4867a9ded8de598c732e}
+ \item Haitham Seada, Kalyanmoy Deb (2015) realizan el estudio sobrela restricción del tamaño de la población impuesto en el NSGA-III original y propone una aproximación que solventa esa deficiencia aprovechando las técnicas de nichos. \cite{7257251}
+ \item Giagkiozis and R.C. Purshouse and P.J. Fleming (2014) Proponen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyan puntos de referencia acorde a la geometría del frente de Pareto de tal manera que se maximice el indicador de hipervolumen, CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente. \cite{Giagkiozis2014363}
+ \item Himanshu Jain, Kalyanmoy Deb (2013) Proponen una distribución adaptativa de los puntos de referencia para asegurar la diversidad. \cite{jain2013improved}
+\end{itemize}
+
+\section{Justificación}
+
+Las metaheurísticas son técnicas de solución versátiles, flexibles y eficientes, estos algoritmos pueden resolver problemas complejos de optimización multiobjetivo \cite{coello1999comprehensive} aproximando el frente real con éxito.
+\newline
+
+De esta forma proporcionan un marco de trabajo accesible computacionalmente para encontrar soluciones de buena calidad que además sean diversas, permitiendo a la persona o sistema tomar la decisión adecuada conforme a los criterios que crean pertinentes.
+\newline
+
+El presente trabajo adquiere importancia con el estudio de los mecanismos que buscan preservar la diversidad de las soluciones en los principales marcos de trabajo en el estado del arte de \emph{MOP}.  
+
+\section{Objetivo General}
+
+Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instancias de prueba, las cuales se encuentran disponibles en \cite{zhang2008multiobjective} y comparar los resultados obtenidos con algunos reportados en la literatura.
+
+\section{Objetivos Particulares}
+
+\begin{itemize}
+\item Desarrollar al menos una estrategia para generar vectores iniciales de buena calidad para \emph{MOEA/D} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
+
+\item Desarrollar al menos una estrategia de actualización de vectores de pesos para el método \emph{MOEA/D}.
+
+\item Desarrollar al menos una estrategia para generar puntos de referencia iniciales de buena calidad para \emph{NSGA-III} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
+
+\item Desarrollar al menos una estrategia de actualización de puntos de referencia para el método \emph{NSGA-III}.
+
+\item Integrar la estrategia de repulsión de subpoblaciones\cite{ahrari2016multimodal} a los métodos \emph{MOEA/D} y \emph{NSGA-III}.
+
+\item Adaptar, implementar y describir el comportamiento del método \emph{MOEA/D} para las instancias seleccionadas.
+ 
+\item Adaptar, implementar y describir el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
+
+\item Comparar los resultados obtenidos de las dos metaheurísticas con algunos resultados obtenidos en la literatura.
+
+\item Identificar las ventajas y desventajas de los algoritmos implementados con respecto a las métricas de diversidad.
+\end{itemize}
+
+
 \section{Metodología}
 
 Para la implementación de las dos heurísticas basadas en los enfoques de descomposición y dominancia, se ha estado haciendo una revisión en el estado del arte para analizar las características de los marcos de trabajo NSGA-III y MOEA/D, tomándolas  como  base para la adaptación al problema, posteriormente se propondrán mejoras a estos algoritmos.
@@ -312,7 +324,7 @@ Posteriormente se realizará un análisis estadístico de cada una de las técni
  
  \begin{itemize}
  \item[•] \textbf{ETAPA 1.} \emph{Se analizó el estado del arte para el MOEA/D y NSGA-III identificando los aportes recientes en cuestiones de diversidad.}
-\item[] Identificando y listando las técnicas reportadas en tres clases: métodos basados en descomposición, métodos basados en dominancia y métodos basados en metricas. Así mismo, se han revisado las técnicas que se busca implementar al problema analizando su estructura y características.
+\item[] Identificando y listando las técnicas reportadas en tres clases: métodos basados en descomposición, métodos basados en dominancia y métodos basados en métricas. Así mismo, se han revisado las técnicas que se busca implementar al problema analizando su estructura y características.
 \emph{(Concluida)}
 
 \item[•] \textbf{Etapa 2.} \emph{Adaptación e implementación de los marcos de trabajo MOEA/D y NSGA-III para incluir mejoras en la selección de vectores/puntos de referencia iniciales y técnicas de adaptación dinámica de los mismos.}
@@ -358,25 +370,24 @@ Entrega de tesis                                               & XX/XX/17       
 
 
 
-\begin{table}[H]
-\centering
-\label{miOtraTabla}
-\scalebox{0.6}{\begin{tabular}{|l|l|}
-\hline
-Nombre de la tarea                 & \multicolumn{1}{c|}{Metas alcanzar al terminar la tarea}                                                                                                                                                                                                                                                                                                                                                            \\ \hline
-Presentación propuesta de tesis    & Aprobación de propuesta de tesis por el comité de posgrado.                                                                                                                                                                                                                                                                                                                                                         \\ \hline
-Correcciones propuesta de tesis    & Registro de Aceptación de tesis.                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
-Adaptación FA para el PAG          & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG y probada\\ con algunas instancias disponibles, esperando tener buenos resultados con respecto de\\  las técnicas existentes en la literatura,  comparando la calidad de la solución y el número\\  de llamadas a la función objetivo;  así como las ventajas y desventajas que ofrece esta técnica.\end{tabular} \\ \hline
-Adaptación GSA para el PAG         & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG  y probada \\ con algunas instancias disponibles,  esperando tener buenos resultados con respecto de\\ las técnicas existentes en la literatura, comparando la calidad de la solución y el número\\ de llamadas a la función objetivo; así como las ventajas y desventajas que ofrece esta técnica.\end{tabular}  \\ \hline
-Adaptación MMC para el PAG         & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG y probada \\ con algunas instancias disponibles, esperando tener buenos resultados con respecto de \\ las técnicas existentes en la literatura, comparando la calidad de la solución y el número\\ de llamadas a la función objetivo;  así como las ventajas y desventajas que ofrece esta técnica.\end{tabular}  \\ \hline
-Anélisis y comparación de técnicas & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de nuestras técnicas con la finalidad de poder\\ decir cuales son sus ventajas o defectos al ser utilizadas con las instancias seleccionadas\\ para el PAG.\end{tabular}                                                                                                                                                                            \\ \hline
-Redacción de tesis                 & Documentación de la investigación realizada.                                                                                                                                                                                                                                                                                                                                                                        \\ \hline
-Entrega de tesis                   & \begin{tabular}[c]{@{}l@{}}Obtener la\\   aprobación y fecha para el examen de grado\end{tabular}                                                                                                                                                                                                                                                                                                                   \\ \hline
-\end{tabular}
-}
-\caption{Metas}
-
-\end{table}
+% \begin{table}[H]
+% \centering
+% \label{miOtraTabla}
+% \scalebox{0.6}{\begin{tabular}{|l|l|}
+% \hline
+% Nombre de la tarea                 & \multicolumn{1}{c|}{Metas alcanzar al terminar la tarea}                                                                                                                                                                                                                                                                                                                                                            \\ \hline
+% Presentación propuesta de tesis    & Aprobación de propuesta de tesis por el comité de posgrado.                                                                                                                                                                                                                                                                                                                                                         \\ \hline
+% Correcciones propuesta de tesis    & Registro de Aceptación de tesis.                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
+% Adaptación FA para el PAG          & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG y probada\\ con algunas instancias disponibles, esperando tener buenos resultados con respecto de\\  las técnicas existentes en la literatura,  comparando la calidad de la solución y el número\\  de llamadas a la función objetivo;  así como las ventajas y desventajas que ofrece esta técnica.\end{tabular} \\ \hline
+% Adaptación GSA para el PAG         & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG  y probada \\ con algunas instancias disponibles,  esperando tener buenos resultados con respecto de\\ las técnicas existentes en la literatura, comparando la calidad de la solución y el número\\ de llamadas a la función objetivo; así como las ventajas y desventajas que ofrece esta técnica.\end{tabular}  \\ \hline
+% Adaptación MMC para el PAG         & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de la técnica implementada al PAG y probada \\ con algunas instancias disponibles, esperando tener buenos resultados con respecto de \\ las técnicas existentes en la literatura, comparando la calidad de la solución y el número\\ de llamadas a la función objetivo;  así como las ventajas y desventajas que ofrece esta técnica.\end{tabular}  \\ \hline
+% Anélisis y comparación de técnicas & \begin{tabular}[c]{@{}l@{}}Se busca describir el comportamiento de nuestras técnicas con la finalidad de poder\\ decir cuales son sus ventajas o defectos al ser utilizadas con las instancias seleccionadas\\ para el PAG.\end{tabular}                                                                                                                                                                            \\ \hline
+% Redacción de tesis                 & Documentación de la investigación realizada.                                                                                                                                                                                                                                                                                                                                                                        \\ \hline
+% Entrega de tesis                   & \begin{tabular}[c]{@{}l@{}}Obtener la\\   aprobación y fecha para el examen de grado\end{tabular}                                                                                                                                                                                                                                                                                                                   \\ \hline
+% \end{tabular}
+% }
+% \caption{Metas}
+% \end{table}
 
 %\begin{figure}[H]
 %\begin{center}
@@ -400,5 +411,3 @@ Entrega de tesis                   & \begin{tabular}[c]{@{}l@{}}Obtener la\\   a
 \bibliographystyle{acm}
 \bibliography{bibliografia}
 \end{document}
-
-
