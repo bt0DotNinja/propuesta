@@ -76,10 +76,10 @@
 \section{Introducción}
 
 El problema de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial, ya que son comunes aquellos problemas que requieren
-considerar múltiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc. Estos objetivos se encuentran típicamente en conflicto y se puede encontrar inmersos en
+considerar múltiples objetivos incluyendo tiempo, costos, cantidad, calidad, etc. Estos objetivos se encuentran típicamente en conflicto y se pueden encontrar inmersos en
 diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros.\\
 
-Si esta clase de problemas ha sido tradicionalmente atacada reduciendo el MOP en un problema mono-objetivo (estrategia de suma agregativa ponderada, de restricciones-eps,
+Si esta clase de problemas ha sido tradicionalmente atacada reduciendo el \textbf{MOP} en un problema mono-objetivo (estrategia de suma agregativa ponderada, de restricciones-$\epsilon$,
 de programación por metas), desde los años 1990, los esfuerzos de investigación se han dedicado al desarrollo de técnicas heurísticas, y particularmente Algoritmos Evolutivos (AEs).
 Desde el punto vista metaheurístico se han generado tres grandes enfoques para resolver el \emph{MOP}:
 
@@ -91,17 +91,17 @@ Desde el punto vista metaheurístico se han generado tres grandes enfoques para 
 
 El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalar y suele introducir técnicas poblacionales para
 la resolución simultánea de ellos. Bajo este enfoque, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad del conjunto
-de soluciones arrojado, dejando la convergencia al sub método de resolución. Un marco de trabajo moderno con este enfoque es el algoritmo evolutivo multiobjetivo basado en
+de soluciones arrojado, dejando la convergencia al sub-método de resolución. Un marco de trabajo moderno con este enfoque es el algoritmo evolutivo multiobjetivo basado en
 descomposición (\emph{MOEA/D})\cite{4358754}.
 \newline
 
 En el enfoque de dominancia, se utilizan las relaciones de dominancia para inducir un orden parcial en el espacio de los objetivos y, de esta manera, decidir cuándo una solución
-en dicho espacio es comparable con otra y, en este caso, cuál es la mejor. Cabe mencionar que dicho orden parcial está limitado en espacios de altas dimensiones puesto que gran
+en dicho espacio es comparable con otra y, en este caso, cuál es la mejor. Cabe mencionar que dicho orden parcial está limitado en espacios de altas dimensiones puesto que una gran
 cantidad de soluciones serán no comparables, mermando en consecuencia la efectividad de los procedimientos de selección. El algoritmo genético de ordenamiento no dominado
-(\emph{NSGA-III})\cite{6600851} es un marco de trabajo moderno con este enfoque, que incorpora además técnicas de nichos para mantener la diversidad.
+(\emph{NSGA-III})\cite{6600851} es un marco de trabajo moderno con esta estrategia, que incorpora además técnicas de nichos para mantener la diversidad.
 \newline
 
-Finalmente, el enfoque basado en métricas convierte el problema multiobjetivo original en un problema mono objetivo diferente que optimiza el valor de métricas de desempeño,
+Finalmente, el enfoque basado en métricas convierte el problema multiobjetivo original en un problema mono objetivo ó multiobjetivo diferente que optimiza el valor de métricas de desempeño,
 representando la calidad del conjunto de soluciones obtenidas tanto en términos de convergencia como de dispersión y uniformidad de su distribución. Una métrica popular
 es el hipervolumen ya que es la única acorde a la definición de  optimalidad de Pareto (i.e., las soluciones Pareto-óptimas son aquellas que maximizan el hipervolumen).
 Sin embargo, calcular el hipervolumen se vuelve costoso conforme aumenta la dimensión del problema multiobjetivo original, por ejemplo, la mejor forma conocida de calcular
@@ -109,7 +109,7 @@ el hipervolumen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de 
 \newline
 
 Un conjunto de soluciones candidatas entregadas por cualquiera de los enfoques antes mencionados debe de cumplir con criterios de convergencia y diversidad para ser
-considerados aceptables. Esta meta de obtener un conjunto de soluciones diversas y uniformemente distribuidas se ve dificultada cuando los métodos de solución deben lidiar con:
+considerado aceptable. Esta meta de obtener un conjunto de soluciones diversas y uniformemente distribuidas se ve dificultada cuando los métodos de solución deben lidiar con:
 
 \begin{itemize}
  \item Convexidad o no convexidad del frente óptimo de Pareto.
@@ -117,13 +117,15 @@ considerados aceptables. Esta meta de obtener un conjunto de soluciones diversas
  \item Densidad no uniforme de las soluciones en el frente óptimo de pareto.
 \end{itemize}
 
-En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que si bien, han estudiado distintos métodos para generarlos,
-sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo, es adecuado entonces, investigar técnicas que permitan los puntos/vectores
-de referencia con el fin de mejorar la diversidad del conjunto solución final.
+En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que representan direcciones de búsqueda en el espacio objetivo. Pero si bien se han estudiado distintos métodos para generarlos,
+sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo,algoritmo. Por lo tanto, el presente proyecto se propone, en primer lugar, comparar la eficacia de diferentes métodos de generación de dicho puntos/vectores de referencia;
+y posteriormente, investigar técnicas que permitan ajustarlos en el transcurso de la búsqueda, con el fin de mejorar la diversidad del conjunto solución final.
+
+
  
 \section{Planteamiento del problema}
 
-El Problema de Optimización Multiobjetivo (MOP) (llamado también
+El Problema de Optimización Multiobjetivo \textbf{(MOP)} (llamado también
 multicriterio o vectorial) puede definirse como el problema de
 encontrar (Osyczka, 1985)\cite{Osyczka1985193}:
 \begin{quote}
@@ -139,7 +141,7 @@ diferente al del caso de problemas mono-objetivo.
 
 
 \subsection{Formulación Matemática}
-El problema de Optimización Multiobjetivo (MOP) se define en su forma general de la siguiente manera:
+El problema de Optimización Multiobjetivo \textbf{(MOP)} se define en su forma general de la siguiente manera:
  
 $$\min \overrightarrow{F(\bm{x})} = \left[ f_1(\bm{x}), f_2(\bm{x}) , \dots, f_n(\bm{x}) \right] $$
 S.A:
@@ -147,9 +149,9 @@ S.A:
 $$g_i(\bm{x}) \leq 0, i=1,2,\dots,m$$
 $$h_j(\bm{x}) = 0, j=1,2,\dots,p$$
 $$x \in \Omega \subset \mathbb{R}$$
-Buscamos el vector $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimice la función $\overrightarrow{F}$
+se busca el vector $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimice la función $\overrightarrow{F}$
 
-\subsubsection{Dominancia de Pareto}
+\subsubsection{Dominancia}
 
 Un vector $\overrightarrow{U}= (u_1 ,\dots, u_k )$ domina a otro $\overrightarrow{V}= (v_1 ,\dots, v_k )$ (denotado mediante $\overrightarrow{U} \preceq \overrightarrow{V}$ ) si y sólo si $\overrightarrow{U}$ es parcialmente menor que $\overrightarrow{V}$ , es decir,
 $\forall i \in (1,\dots, k), u_i \leq v_i$ y $\exists i \in (1,\dots, k),  u_i<v_i$.
