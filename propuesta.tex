@@ -233,9 +233,34 @@ aquí se exponen brevemente el funcionamiento de los marcos de trabajo MOEA/D y 
 
 \subsection{Marco de Trabajo MOEA/D}
 El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007. \cite{4358754}, 
-Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos. El proceso de descomposición requiere de un conjunto de vectores de pesos 
 
-al descomponer un problema multiobjetivo en $N$ problemas de optimización escalares y resolverlos simultáneamente, de esta manera se distingue por tener las siguientes características
+Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos. El proceso de descomposición requiere de un conjunto de vectores de peso, 
+que deben cumplir con estar distribuidos uniformemente en el espacio de las soluciones. Es requerida ademas, una función de escalarización que admita diferentes vectores de peso, en principio, 
+las funciones de sumas ponderadas  ($g^{ws}$) y pesos de Chebyshev ($g^{te}$) son usadas en la propuesta original del algoritmo y se definen como sigue:
+
+\begin{enumerate}
+\item La función de sumas ponderadas define el siguiente problema de optimización escalar:
+$$\min g^{ws}(x\|w) = \sum^M_{i=1} w_if_i(x) $$
+S.A:
+$$ \sum^M_{i=1} w_i = 1$$
+$$w \geq 0$$ 
+
+Esta función suele ofrecer buenos resultados en espacios de soluciones convexos, sin embargo, no es capaz de mapear cada punto del $\mathcal{PF}_{true}$ en espacios no convexos.
+
+\item La función de pesos Chebyshev define el siguiente problema de optimización escalar:
+
+$$\min g^{te}(x\|w) = \max{i=1,\dots,M} w_i(f_i(x) -z^{*})$$
+
+donde:
+$$z^{*}= \min (f_i(x) | x \in \Omega) $$
+
+Se ha probado que la función de pesos de Chebyshev puede generar cualquier punto en $\mathcal{PF}_{true}$ sin importar la convexidad del espacio.
+\end{enumerate}
+
+Una vez seleccionada la función de escalarización es posible definir $N$ problemas de optimización escalares, la resolución de los problemas se realiza de forma simultánea
+por medio de la construcción de un nicho con las soluciones candidatas de los $T$ problemas más cercanos. Este nicho es la población de un algoritmo genético
+que mejora las soluciones en cada generación. Como marco de trabajo, \emph{MOEA/D} se distingue por tener las siguientes características:
+
  \begin{itemize}
  \item Técnicas de análisis geométrico sobre el simplejo del problema \cite{mie99,Das:1998:NIN:588907.589322, Messac2003}
  \item Mejora de soluciones hasta óptimos locales/globales garantizados por el teorema de Holland\cite{Holland:1992:ANA:531075}
@@ -271,15 +296,29 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 
 \subsection{Marco de Trabajo NSGA-III}
 
-El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}, es una mejora a NSGA-II para trabajar con problemas de más de $3$ funciones objetivos. propone sustituir “Crowding distance” por métodos de nichos de tal manera que ayuden a mejorar la diversidad de la población.
+El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}. Utiliza la noción de Golberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}
+, es una mejora a NSGA-II para trabajar con problemas de más de $3$ funciones objetivos.
 
+Inicia generando una población padre ($P_t$) de tamaño $N$ en el dominio del problema, utilizando las operaciones de selección, cruza y mutación genera una población descendiente ($Q_t$)
+Ambas poblaciones son combinadas y ordenadas en $K$ niveles conforme a los criterios de dominancia (``Non dominated sorting''), los $N$ mejores miembros son seleccionados para formar
+la siguiente población padre ($P_{t+1}$), esto es tomando los miembros de los mejores $l-1$ niveles de dominancia. Para completar los $N$ miembros de $P_{t+1}$ es requerido un procedimiento
+para seleccionar a los individuos faltantes entre los miembros del nivel $l$. Aquí la diferencia fundamental entre \emph{NSGA-III} y su predecesor es como se realiza la preservación de nichos,
+\emph{NSGA-III} propone sustituir ``Crowding distance'' por métodos de nichos de tal manera que ayuden a mejorar la diversidad de la población. Para esto \emph{NSGA-III} genera puntos de referencia
+iniciales utilizando en método propuesto por Das \& Dennis en 1998 \cite{Das:1998:NIN:588907.589322} donde se definen $K$ puntos estructurados sobre el simplejo $M$ dimensional.
+Para determinar $K$ es requerido $p$ que es un parámetro a ajustar, entonces $K$ puede ser calculada como sigue:
+  $$K= {M+p-1 \choose p}$$
+Cada punto $\bm{Z}^{(k)}=(z_1^{(k)},z_2^{(k)}, \dots, z_M^{(k)})$ satisface la siguiente condición:
+  $$\sum_{i=1}^M z_i^{(K)} = 1$$
+Esto generar un hiperplano lineal en $M$ dimensiones con un ángulo igual para cada eje e intersectando cada eje en solo un punto.
 
-\begin{itemize}
- \item Utiliza la noción de Golberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}.
- \item Utiliza nichos y especialización para generar múltiples puntos sobre el frente de Pareto en lugar de punto por corrida.
-\end{itemize}
+\begin{figure}[h]
+ \centering
+\includegraphics[scale=0.35]{hyper.png}
+\caption{Hyperplano unitario generado con el método de Das \& Dennis}.
+\end{figure}
+Con los puntos de referencia y las magnitudes de las funciones objetivo normalizadas se calcula la distancia ortogonal entre cada punto en nivel $l$ y se asocian a su punto de referencia más cercano,
+seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en los nichos menos poblados promoviendo la diversidad. Esto se repite hasta cumplir el criterio de paro.
 
-TODO Das y Dennis
 
 \subsubsection{Pseudocódigo NSGA-III}
  
@@ -316,6 +355,25 @@ TODO Das y Dennis
   \Return ($P_{t+1}$)
 \end{algorithm}}
 
+\subsection{Repulsión de subpoblaciones}
+
+En 2016, Ahrari et al. proponen utilizar una técnica de nichos basada en la repulsión de subpoblaciones \cite{ahrari2016multimodal}. Toda subpoblación $P_i$ tiene un tamaño fijo $\lambda$,
+sus propios parámetros de cruza y mutación ($\sigma_{mean_i},C_i$), un centro ($x_{mean_i}$) y miembros elite. Existe también un conjunto de puntos prohibidos $y_k$
+(mejores soluciones actuales o los centros de las subpoblaciones) que restringen la generación de nuevas soluciones en base a una distancia métrica, es decir, las nuevas soluciones aceptables
+se encontraran en regiones poco exploradas del espacio de búsqueda. Una solución se considera aceptable satisface el criterio distancia con todos los puntos prohibidos, de lo contrario,
+la solución es rechazada. El efecto general de esta estrategia es una remodelación de las soluciones alcanzadas de tal manera que las subpoblaciones no buscan en regiones del espacio
+previamente exploradas y dos subpoblaciones no buscan en la misma región del espacio de búsqueda.
+\newline
+
+Esta estrategia de nichos utiliza la distancia de Mahalanobis\cite{mahalanobis1936generalised}, una versión escalada de la distancia euclidiana, permitiendo revisar si una solución esta lo suficientemente
+alejada de los puntos prohibidos. La distancia de Mahalanobis ($D_{ij-k}$) de la $j$-ésima solución ($x_{ij}$) de $P_i$, matriz de covarianza $C_i$ y desviación estándar $\sigma_{mean_i}$ al punto prohibido
+$y_k$, se define como sigue:
+
+$$D_{ij-k} = \frac{(x_{ij}-y_k)^T C^{-1}_i (x_{ij}-y_k)}{\sigma_{mean_i}}$$
+
+Una consecuencia del uso de esta distancia en particular es que $D_{ij-k}$ es inversamente proporcional a $\sigma_{mean_i}$, es decir, cuando las soluciones convergen $x_{ij}$ a $y_k$, 
+la distancia $D_{ij-k}$ aumenta. Este comportamiento evita que las nuevas soluciones sean similares a $y_k$.
+
 
 \subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
 
@@ -347,7 +405,9 @@ Las metaheurísticas son técnicas de solución versátiles, flexibles y eficien
 De esta forma proporcionan un marco de trabajo accesible computacionalmente para encontrar soluciones de buena calidad que además sean diversas, permitiendo a la persona o sistema tomar la decisión adecuada conforme a los criterios que crean pertinentes.
 \newline
 
-El presente trabajo adquiere importancia con el estudio de los mecanismos que buscan preservar la diversidad de las soluciones en los principales marcos de trabajo en el estado del arte de \emph{MOP}.  
+El presente trabajo adquiere importancia con el estudio de los mecanismos que buscan preservar la diversidad de las soluciones en los principales marcos de trabajo en el estado del arte de \textbf{MOP}, en particular,
+la inicialización de vectores de pesos/ puntos de referencia iniciales y la capacidad de adaptar los mismos durante el transcurso de la ejecución de los algoritmos es vital para alcanzar los objetivos de diversidad y convergencia
+Tomando como referencia la técnica de repulsión de subpoblaciones proveniente de la optimización multimodal\cite{doi:10.1162/EVCOa00182}, se espera introducir un método de adaptación de puntos de referencia/vectores de pesos que aproveche la información adquirida para redistribuir las referencias para mejorar la diversidad con respecto a alguna métrica.
 
 \section{Objetivo General}
 
