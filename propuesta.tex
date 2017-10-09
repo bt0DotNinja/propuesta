@@ -122,8 +122,8 @@ sus valores se mantienen clásicamente fijos durante el transcurso de la ejecuci
 y posteriormente, investigar técnicas que permitan ajustarlos en el transcurso de la búsqueda, con el fin de mejorar la diversidad del conjunto solución final.\\
 
 El resto de la presente propuesta se organiza de la siguiente manera. En una segunda sección, se plantea el problema de optimización multi-objetivo en términos generales.
-La tercera sección presenta una breve exposicion de los antecedentes. La cuarta sección expone estado del arte sobre los temas relacionados con este estudio. La quinta sección describe el objetivo general, 
-una sexta sección enumera los objetivos particulares, La séptima sección presenta la metodología a seguir para alcanzar los objetivos descritos en la secciones 5 y 6, 
+La tercera sección presenta una breve exposicion de los antecedentes. La cuarta sección expone estado del arte sobre los temas relacionados con este estudio. La quinta sección describe el objetivo general,
+una sexta sección enumera los objetivos particulares, La séptima sección presenta la metodología a seguir para alcanzar los objetivos descritos en la secciones 5 y 6,
 Finalmente la octava sección incluye un cronograma de trabajo.
 
  
@@ -152,7 +152,7 @@ S.A:
  
 $$g_i(\bm{x}) \leq 0, i=1,2,\dots,m$$
 $$h_j(\bm{x}) = 0, j=1,2,\dots,p$$
-$$x \in \Omega \subset \mathbb{R}$$
+$$\bm{x} \in \Omega \subset \mathbb{R}^n$$
 
 Se busca el conjunto de vectores $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimicen la función $\overrightarrow{F}$. Las $g_i$ representa las $m$ restricciones de desigualdad y $h_j$ las $p$ restricciones de igualdad.
 
@@ -232,10 +232,10 @@ Entre los procedimientos metaheurísticos existen distintos marcos de trabajo en
 aquí se exponen brevemente el funcionamiento de los marcos de trabajo MOEA/D y NSGA-III, así como las distintas estrategias tomadas para mejorar la diversidad del frente resultante.
 
 \subsection{Marco de Trabajo MOEA/D}
-El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007. \cite{4358754}, 
+El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007. \cite{4358754},
 
-Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos. El proceso de descomposición requiere de un conjunto de vectores de peso, 
-que deben cumplir con estar distribuidos uniformemente en el espacio de las soluciones. Es requerida ademas, una función de escalarización que admita diferentes vectores de peso, en principio, 
+Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos. El proceso de descomposición requiere de un conjunto de vectores de peso,
+que deben cumplir con estar distribuidos uniformemente en el espacio de las soluciones. Es requerida ademas, una función de escalarización que admita diferentes vectores de peso, en principio,
 las funciones de sumas ponderadas  ($g^{ws}$) y pesos de Chebyshev ($g^{te}$) son usadas en la propuesta original del algoritmo y se definen como sigue:
 
 \begin{enumerate}
@@ -243,7 +243,7 @@ las funciones de sumas ponderadas  ($g^{ws}$) y pesos de Chebyshev ($g^{te}$) so
 $$\min g^{ws}(x\|w) = \sum^M_{i=1} w_if_i(x) $$
 S.A:
 $$ \sum^M_{i=1} w_i = 1$$
-$$w \geq 0$$ 
+$$w \geq 0$$
 
 Esta función suele ofrecer buenos resultados en espacios de soluciones convexos, sin embargo, no es capaz de mapear cada punto del $\mathcal{PF}_{true}$ en espacios no convexos.
 
@@ -314,7 +314,7 @@ Esto generar un hiperplano lineal en $M$ dimensiones con un ángulo igual para c
 \begin{figure}[h]
  \centering
 \includegraphics[scale=0.35]{hyper.png}
-\caption{Hyperplano unitario generado con el método de Das \& Dennis}.
+\caption{Hiperplano unitario generado con el método de Das \& Dennis}.
 \end{figure}
 Con los puntos de referencia y las magnitudes de las funciones objetivo normalizadas se calcula la distancia ortogonal entre cada punto en nivel $l$ y se asocian a su punto de referencia más cercano,
 seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en los nichos menos poblados promoviendo la diversidad. Esto se repite hasta cumplir el criterio de paro.
@@ -337,7 +337,7 @@ seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en 
    $S_t = S_t \cup F_i$\;
    $i=i+1$\;
    }
-   $F_l = F_i$
+   $F_l = F_i$\;
    \eIf{$|S_t| == N$}{
    $P_{t+1} = S_t$\;
    break\;
@@ -371,7 +371,7 @@ $y_k$, se define como sigue:
 
 $$D_{ij-k} = \frac{(x_{ij}-y_k)^T C^{-1}_i (x_{ij}-y_k)}{\sigma_{mean_i}}$$
 
-Una consecuencia del uso de esta distancia en particular es que $D_{ij-k}$ es inversamente proporcional a $\sigma_{mean_i}$, es decir, cuando las soluciones convergen $x_{ij}$ a $y_k$, 
+Una consecuencia del uso de esta distancia en particular es que $D_{ij-k}$ es inversamente proporcional a $\sigma_{mean_i}$, es decir, cuando las soluciones convergen $x_{ij}$ a $y_k$,
 la distancia $D_{ij-k}$ aumenta. Este comportamiento evita que las nuevas soluciones sean similares a $y_k$.
 
 
@@ -393,7 +393,7 @@ En el caso de el enfoque de dominancia se encontraron los siguientes trabajos:
 \begin{itemize}
  \item Haitham Seada \& Kalyanmoy Deb (2015) proponen un algoritmo basado en NSGA-III capaz de adaptarse y funcionar bien en problemas multiobjetivo, mono objetivo y de muchos objetivos ajustando los parámetros del algoritmo según la dimensión \cite{a0ecee762d9f4867a9ded8de598c732e}.
  \item Haitham Seada \& Kalyanmoy Deb (2015) realizan un estudio sobre la restricción del tamaño de población impuesto en el NSGA-III original y proponen una aproximación que solventa esa deficiencia aprovechando las técnicas de nichos \cite{7257251}.
- \item Giagkiozis et al. (2014) introducen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyen lon puntos de referencia acorde a la geometría del frente de Pareto, de tal manera que se maximice el indicador de hipervolumen. CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente \cite{Giagkiozis2014363}.
+ \item Giagkiozis et al. (2014) introducen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyen los puntos de referencia acorde a la geometría del frente de Pareto, de tal manera que se maximice el indicador de hipervolumen. CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente \cite{Giagkiozis2014363}.
  \item Himanshu Jain \& Kalyanmoy Deb (2013) desarrollan una distribución adaptativa de los puntos de referencia para asegurar la diversidad, reubicando los puntos referencia que no han sido asociados a soluciones factibles hacia posiciones vecinas donde se espera tengan soluciones asociadas \cite{jain2013improved}.
 \end{itemize}
 
@@ -411,28 +411,26 @@ Tomando como referencia la técnica de repulsión de subpoblaciones proveniente 
 
 \section{Objetivo General}
 
-Adaptar los métodos heurísticos MOEA/D y NSGA-III para resolver algunas instancias de prueba, las cuales se encuentran disponibles en \cite{zhang2008multiobjective} y comparar los resultados obtenidos con algunos reportados en la literatura.
+Adaptar e integrar estrategias de generación y actualización de los vectores de peso en el MOEA/D y de los puntos de referencia en el NSGA-III para  evaluar su impacto sobre el desempeño en términos de diversidad de estos dos algoritmos evolutivos multiobjetivo.
 
 \section{Objetivos Particulares}
 
 \begin{itemize}
-\item Desarrollar al menos una estrategia para generar vectores iniciales de buena calidad para \emph{MOEA/D} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
-
-\item Desarrollar al menos una estrategia de actualización de vectores de pesos para el método \emph{MOEA/D}.
-
-\item Desarrollar al menos una estrategia para generar puntos de referencia iniciales de buena calidad para \emph{NSGA-III} en el conjunto de instancias propuestas en \cite{zhang2008multiobjective}.
-
-\item Desarrollar al menos una estrategia de actualización de puntos de referencia para el método \emph{NSGA-III}.
-
-\item Integrar la estrategia de repulsión de subpoblaciones\cite{ahrari2016multimodal} a los métodos \emph{MOEA/D} y \emph{NSGA-III}.
 
 \item Adaptar, implementar y describir el comportamiento del método \emph{MOEA/D} para las instancias seleccionadas.
  
 \item Adaptar, implementar y describir el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
 
-\item Comparar los resultados obtenidos de las dos metaheurísticas con algunos resultados obtenidos en la literatura.
+\item Adaptar e implementar al menos dos estrategias para generar vectores de peso /puntos de referencia iniciales para \emph{MOEA/D} y \emph{NSGA-III}.
 
-\item Identificar las ventajas y desventajas de los algoritmos implementados con respecto a las métricas de diversidad.
+\item Desarrollar al menos una estrategia de actualización de vectores de pesos para el método \emph{MOEA/D}, basada en el método de repulsión de subpoblaciones\cite{ahrari2016multimodal}.
+
+\item Desarrollar al menos una estrategia de actualización de puntos de referencia para el método \emph{NSGA-III}, basada en el método de repulsión de subpoblaciones\cite{ahrari2016multimodal}.
+
+\item Realizar experimentos computacionales sobre un banco de instancias clásicas de optimización multiobjetivo\cite{zhang2008multiobjective} para comparar las diferentes versiones de los algoritmos estudiados, particularmente con respecto a las métricas de diversidad.
+
+\item Realizar experimentos computacionales sobre un banco de instancias clásicas de optimización multiobjetivo\cite{zhang2008multiobjective} para comparar los resultados obtenidos con los reportados en la literatura especializada.  
+
 \end{itemize}
 
 
