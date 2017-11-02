@@ -214,14 +214,14 @@ Donde $d_i$ es la distancia mínima entre el punto $p_i \in PF_{aprox}$ y $PF_{t
   \item $E$ son los puntos extremos del frente real $PF_{true}$.
  \end{itemize}
 
- \item Hipervolumen: El hipervolumen mide el área, volumen, o hipervolúmen, encerrado entre los puntos en la aproximación del frente de Pareto, $PF_{aprox}$
+ \item Hipervolumen: El hipervolumen mide el área, volumen, o hipervolumen, encerrado entre los puntos en la aproximación del frente de Pareto, $PF_{aprox}$
 un punto de referencia, $r$.
  $$\bm{\Delta}(PF_{aprox},r)=\bigcup^N_{i=1} (v|p^j_i \leq v_j \leq r_j , j = 1, \dots, m) $$
  
  \item Energia-$S$: La energia-$S$ esta dada por:
  $$E_S(A)= \sum_{i\neq j}\| a_i - a_j\|^{-S}$$
  Donde $A = \{ a_1, \dots, a_{|A|}\}$ y $S>0$ es un parámetro fijo. Este indicador de rendimiento es utilizado para discretizar colectores en altas dimensiones y
- su minimización implica una distribucion uniforme de los puntos en $A$ si $S\geq m-1$\cite{hardin2004discretizing}.
+ su minimización implica una distribución uniforme de los puntos en $A$ si $S\geq m-1$\cite{hardin2004discretizing}.
 \end{itemize}
 
 
@@ -250,7 +250,7 @@ Esta función suele ofrecer buenos resultados en espacios de soluciones convexos
 
 $$\min g^{te}(x\|w) = \max_{1\leq i \leq M} w_i(f_i(x) -z^{*})$$
 
-donde:
+Dónde:
 $$z^{*}= \min_{1\leq i \leq M} (f_i(x) | x \in \Omega) $$
 
 Se ha probado que la función de pesos de Chebyshev puede generar cualquier punto en $\mathcal{PF}_{true}$ sin importar la convexidad del espacio.
@@ -296,7 +296,7 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 \subsection{Marco de Trabajo NSGA-III}
 
 El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}. Utiliza los conceptos enunciados por Golberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}
-, es una mejora a NSGA-II para trabajar con problemas de más de $3$ funciones objetivos.
+, es una mejora a NSGA-II para trabajar con problemas de más de $3$ objetivos.
 
 Inicia generando una población padre ($P_t$) de tamaño $N$ en el dominio del problema, utilizando las operaciones de selección, cruza y mutación genera una población descendiente ($Q_t$)
 Ambas poblaciones son combinadas y ordenadas en $K$ niveles conforme a los criterios de dominancia (``Non dominated sorting''), los $N$ mejores miembros son seleccionados para formar
@@ -325,7 +325,7 @@ seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en 
    \begin{algorithm}[H]
    \caption{Algoritmo NSGA-III}
      
- \KwData{$H$:puntos de referencia estructurados $\bm{Z}^{(s)}$, Poblacion Padre $P_t$}
+ \KwData{$H$:puntos de referencia estructurados $\bm{Z}^{(s)}$, Población Padre $P_t$}
  \KwResult{$P_{t+1}$}
    $S_t=\emptyset,i=1$\;
    $Q_t = Recombinacion+Mutacion(P_t)$\;
@@ -357,25 +357,34 @@ seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en 
 
 \subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
 
-Con ambas estrategias (descomposición con el MOEA/D y dominancia con el NSGA-III), la determinación de los vectores de peso o puntos de referencia constituye claramente un factor crítico para obtener una buena diversidad del frente aproximado. Se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposición como:
-\newline
-
+Se han realizado varios esfuerzos enfocados a la mejora de la diversidad en algoritmos evolutivos multiobjetivo como los resumidos a continuación:
 
 \begin{itemize}
- \item Cheng He \& Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si la superficie del frente es cóncava, convexa o un hiperplano. Este procedimiento se repite para numerosas subregiones del espacio objetivo, generando experimentalmente un conjunto de puntos mejor distribuidos (de acuerdo a la métrica Spacing) que el método de referencia propuesto por Das y Dennis.\cite{7748353}.    
  \item T. C. Chiang \& Y. P. Lai (2011) consideran dos cambios fundamentales en la estructura de MOEA/D y MOEA/D-DE (en el que la generación de nuevas soluciones candidatas se realiza mediante el operador de mutación de Evolución Diferencial), el primero consiste en crear un criterio de selección del subproblema a resolver si es que éste no se considera resuelto (sin mejora tras cierto número de iteraciones) con el fin de redistribuir el tiempo de cómputo solo en los problemas aún sin resolver. La segunda mejora es la restricción a la cruza aplicada a los individuos en el espacio de las variables de decisión en lugar del espacio de los objetivos. Sin embargo, la generación de los nichos requiere ajustar dos parámetros adicionales que empeoran un proceso de agrupamiento computacionalmente costoso $O(nN^2)$\cite{5949789}.
  \item B. Liu et al. (2010) utilizan una variante de MOEA/D que sustituye al algoritmo genético por evolución diferencial (DE/best/1/bin). Los autores buscan mejorar la diversidad usando un factor de escalamiento aleatorio en la evolución diferencial, además de restringir la cruza al permitir aleatoriamente cruza con individuos fuera de la vecindad. Utilizan descomposición por el método de Tchebycheff \cite{5585957}.
  \item S. Z. Zhao et al. (2010) proponen calcular el tamaño de vecindario en MOEA/D de forma dinámica, generando un ranking de los tamaños que estadísticamente dan mejores resultados. Este proceso se repite recalcula cada cierto número de generaciones, siendo entonces el tamaño de vecindario auto-adaptativo \cite{6151117}.
-\end{itemize}
+ \item Haitham Seada \& Kalyanmoy Deb (2015) proponen un algoritmo basado en NSGA-III capaz de adaptarse y funcionar bien en problemas multiobjetivo, mono objetivo y de muchos objetivos ajustando los parámetros del algoritmo según la dimensión \cite{a0ecee762d9f4867a9ded8de598c732e}.
+ \item Giagkiozis et al. (2014) introducen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyen los puntos de referencia acorde a la geometría del frente de Pareto, de tal manera que se maximice el indicador de hipervolumen. CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente \cite{Giagkiozis2014363}.
+ \item Haitham Seada \& Kalyanmoy Deb (2015) realizan un estudio sobre la restricción del tamaño de población impuesto en el NSGA-III original y proponen una aproximación que solventa esa deficiencia aprovechando las técnicas de nichos \cite{7257251}.
+ \end{itemize}
 
-En el caso de el enfoque de dominancia se encontraron los siguientes trabajos:
+Con ambas estrategias (descomposición con el MOEA/D y dominancia con el NSGA-III), la determinación de los vectores de peso o puntos de referencia constituye claramente un factor crítico para obtener una buena diversidad del frente aproximado. Se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposición como:
+\newline
 
 \begin{itemize}
- \item Haitham Seada \& Kalyanmoy Deb (2015) proponen un algoritmo basado en NSGA-III capaz de adaptarse y funcionar bien en problemas multiobjetivo, mono objetivo y de muchos objetivos ajustando los parámetros del algoritmo según la dimensión \cite{a0ecee762d9f4867a9ded8de598c732e}.
- \item Haitham Seada \& Kalyanmoy Deb (2015) realizan un estudio sobre la restricción del tamaño de población impuesto en el NSGA-III original y proponen una aproximación que solventa esa deficiencia aprovechando las técnicas de nichos \cite{7257251}.
- \item Giagkiozis et al. (2014) introducen el método Cross-entropy (CE) basado en métodos probabilísticos que distribuyen los puntos de referencia acorde a la geometría del frente de Pareto, de tal manera que se maximice el indicador de hipervolumen. CE utiliza métodos poblacionales y reacciona ante eventos para ajustar la distribución de probabilidad y adaptarse al frente \cite{Giagkiozis2014363}.
- \item Himanshu Jain \& Kalyanmoy Deb (2013) desarrollan una distribución adaptativa de los puntos de referencia para asegurar la diversidad, reubicando los puntos referencia que no han sido asociados a soluciones factibles hacia posiciones vecinas donde se espera tengan soluciones asociadas \cite{jain2013improved}.
+ \item Cheng He \& Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si la superficie del frente es cóncava, convexa o un hiperplano. Este procedimiento se repite para numerosas subregiones del espacio objetivo, generando experimentalmente un conjunto de puntos mejor distribuidos (de acuerdo a la métrica Spacing) que el método de referencia propuesto por Das y Dennis.\cite{7748353}.    
+ \item Zang \& Deb (2015) introducen una técnica que amplía ``Simplex Lattice'' utilizando un modelo de dos capas que permite integrar puntos adicionales en una capa interna, evitando que en altas dimensiones la mayoría de los puntos sean cercanos a las fronteras del simplejo generado\cite{li2015evolutionary}.
+ \item Das \& Dennis (1998) proponen utilizar ``Simplex Lattice'' para la generación de puntos de referencia iniciales en la optimización multiobjetivo \cite{Das:1998:NIN:588907.589322}, esta técnica proviene del diseño de mezclas y es ampliamente usada en los algoritmos evolutivos multiobjetivo \cite{4358754,6600851}.
+ \item Tan \& Yan (2013) adaptar la técnica de diseño uniforme\cite{fang2000uniform} a la optimización multiobjetivo donde los puntos iniciales son la solución a un problema de optimización combinatoria que mínimiza la métrica de discrepancia centrada $L2$ \cite{tan2013moea,fang2002centered}.
+ \end{itemize}
+
+Finalmente un área poco estudiada propone modificar los puntos/vectores de referencia de forma dinámica durante el transcurso del algoritmo de tal manera que estos se ajustan a la geometría del $\mathcal{PF}_{true}$:
+\begin{itemize}
+  \item Himanshu Jain \& Kalyanmoy Deb (2013) desarrollan una distribución adaptativa de los puntos de referencia para asegurar la diversidad, reubicando los puntos referencia que no han sido asociados a soluciones factibles hacia posiciones vecinas donde se espera tengan soluciones asociadas \cite{jain2013improved}.
+  \item Yutao Qi et al (2014) proponen modificar los vectores de peso conforme a las distancias relativas y agrupamientos dados por los $k$ vecinos más cercanos, generando medidas de dispersión que permiten adicionar vectores en regiones con alta dispersión y eliminado vectores de regiones densas\cite{doi:10.1162/EVCOa00109}.
 \end{itemize}
+
+Aunque esta última es un área poco explorada, es factible proponer una estrategia basada en las ideas de repulsión de subpoblaciones, introducidas en la subsección siguiente.
 
 \subsection{Repulsión de subpoblaciones}
 
@@ -408,7 +417,7 @@ De esta forma proporcionan un marco de trabajo accesible computacionalmente para
 
 El presente trabajo adquiere importancia con el estudio de los mecanismos que buscan preservar la diversidad de las soluciones en los principales marcos de trabajo en el estado del arte de \textbf{MOP}. En particular,
 la inicialización de vectores de pesos/ puntos de referencia iniciales y la capacidad de adaptar los mismos durante el transcurso de la ejecución de los algoritmos son vitales para alcanzar los objetivos de diversidad y convergencia. 
-Tomando como referencia la técnica de repulsión de subpoblaciones proveniente de la optimización multimodal\cite{doi:10.1162/EVCOa00182}, se espera introducir un método de adaptación de puntos de referencia/vectores de pesos que aproveche la información adquirida para redistribuir las referencias para mejorar la diversidad con respecto a alguna métrica.
+Tomando como referencia la técnica de repulsión de subpoblaciones proveniente de la optimización multimodal\cite{ahrari2016multimodal}, se espera introducir un método de adaptación de puntos de referencia/vectores de pesos que aproveche la información adquirida para redistribuir las referencias para mejorar la diversidad con respecto a alguna métrica.
 
 \section{Objetivo General}
 
