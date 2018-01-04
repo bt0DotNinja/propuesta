@@ -77,13 +77,13 @@
 \newpage
 \section{Introducción}
 
-Los problemas de optimización multiobjetivo \textbf{(MOP)} ha sido de gran interés en la comunidad científica e industrial, ya que son comunes aquellos problemas que requieren
+Los problemas de optimización multiobjetivo \textbf{(MOP)} ha sido de gran utilidad en la comunidad científica e industrial, ya que son comunes aquellos problemas que requieren
 considerar múltiples objetivos, incluyendo tiempo, costos, cantidad, calidad, etc. Estos objetivos se encuentran típicamente en conflicto y se pueden encontrar inmersos en
-diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros.\\
+diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros\cite{coello2004applications}.\\
 
-Esta clase de problemas ha sido tradicionalmente atacada reduciendo el \textbf{MOP} en un problema mono-objetivo (estrategias de suma agregativa ponderada, de restricciones-$\epsilon$,
-de programación por metas), desde los años 1990, los esfuerzos de investigación se han dedicado al desarrollo de técnicas metaheurísticas, y particularmente Algoritmos Evolutivos (AEs).
-Desde el punto vista metaheurístico, se han generado tres grandes enfoques para resolver \emph{MOP}:
+Esta clase de problemas ha sido tradicionalmente atacada reduciendo el \textbf{MOP} a un problema mono-objetivo (estrategias de suma agregativa ponderada, de restricciones-$\epsilon$,
+de programación por metas). Desde los años 1990, los esfuerzos de investigación se han dedicado al desarrollo de técnicas metaheurísticas y , particularmente, Algoritmos Evolutivos (AEs).
+Desde el punto de vista metaheurístico, se han generado tres grandes enfoques para resolver \emph{MOP}:
 
 \begin{itemize}
  \item Basado en descomposición
@@ -103,36 +103,38 @@ cantidad de soluciones serán no comparables, mermando en consecuencia la efecti
 (\emph{NSGA-III})\cite{6600851} es un marco de trabajo moderno con esta estrategia, que incorpora además técnicas de nichos para mantener la diversidad.
 \newline
 
-Finalmente, el enfoque basado en métricas convierte el problema multiobjetivo original en un problema mono o multiobjetivo diferente que optimiza el valor de métricas de desempeño,
+Finalmente, el enfoque basado en métricas convierte el problema multiobjetivo original en un problema mono o multiobjetivo diferente que optimiza el valor de alguna métrica de desempeño,
 representando la calidad del conjunto de soluciones obtenidas tanto en términos de convergencia como de dispersión y uniformidad de su distribución. Una métrica popular
 es el hipervolumen ya que es la única acorde a la definición de  optimalidad de Pareto (i.e., las soluciones Pareto-óptimas son aquellas que maximizan el hipervolumen).
-Sin embargo, calcular el hipervolumen se vuelve costoso conforme aumenta la dimensión del problema multiobjetivo original, por ejemplo, la mejor forma conocida de calcular
-el hipervolumen tiene una complejidad de $O(n^2m^3)$ donde $n$ es el número de soluciones aproximadas y $m$ el número de objetivos.
+Sin embargo, calcular el hipervolumen se vuelve costoso conforme aumenta la dimensión del problema multiobjetivo original. Por ejemplo, la mejor forma conocida de calcular
+el hipervolumen tiene una complejidad de $O(n^2m^3)$, donde $n$ es el número de soluciones aproximadas y $m$ el número de objetivos.
 \newline
 
 Un conjunto de soluciones candidatas entregadas por cualquiera de los enfoques antes mencionados debe de cumplir con criterios de convergencia y diversidad para ser
-considerado aceptable. Esta meta de obtener un conjunto de soluciones diversas y uniformemente distribuidas se ve dificultada cuando los métodos de solución deben lidiar con:
+considerado aceptable. Esta meta de obtener un conjunto de soluciones diversas y uniformemente distribuidas se ve dificultada cuando el MOP tiene alguna de las siguientes características:
 
 \begin{itemize}
  \item Convexidad o no convexidad del frente óptimo de Pareto.
  \item Discontinuidad del frente óptimo de Pareto.
  \item Densidad no uniforme de las soluciones en el frente óptimo de pareto.
+ \item Degeneración del frente 
 \end{itemize}
 
-En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que representan direcciones de búsqueda en el espacio objetivo. Pero si bien se han estudiado distintos métodos para generarlos,
-sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo. Esta estrategia puntos/vectores de referencia estáticos experimenta justamente problemas cuando el frente óptimo presenta las fuentes de dificultad antes mencionadas (no-convexidad, degeneración, discontinuidad del frente óptimo).
-Por lo tanto, el presente proyecto se propone, en primer lugar, comparar la eficacia de diferentes métodos de generación de dichos puntos/vectores de referencia;
+En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que representan direcciones de búsqueda en el espacio objetivo. Si bien se han estudiado distintos métodos para generarlos,
+sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo. Esta estrategia de puntos/vectores de referencia estáticos experimenta problemas cuando el frente óptimo presenta las fuentes de dificultad antes mencionadas (no convexidad, degeneración, discontinuidad del frente óptimo).\\
+
+Por lo tanto, el presente proyecto propone, en primer lugar, comparar la eficacia de diferentes métodos de generación de dichos puntos/vectores de referencia;
 y posteriormente, investigar técnicas que permitan ajustarlos en el transcurso de la búsqueda, con el fin de mejorar la diversidad del conjunto solución final.\\
 
 El resto de la presente propuesta se organiza de la siguiente manera. En una segunda sección, se plantea el problema de optimización multiobjetivo en términos generales.
 La tercera sección presenta una breve exposición de los antecedentes. La cuarta sección expone la justificación de este estudio. La quinta sección describe el objetivo general,
 una sexta sección enumera los objetivos particulares. La séptima sección presenta la metodología a seguir para alcanzar los objetivos descritos en las secciones 5 y 6.
-Finalmente la octava sección incluye un cronograma de trabajo.
+Finalmente, la octava sección incluye el cronograma de trabajo.
 
  
 \section{Planteamiento del problema}
 
-El Problema de Optimización Multiobjetivo \textbf{(MOP)} (llamado también
+Un Problema de Optimización Multiobjetivo \textbf{(MOP)} (llamado también
 multicriterio o vectorial) puede definirse como el problema de
 encontrar (Osyczka, 1985)\cite{Osyczka1985193}:
 \begin{quote}
@@ -150,19 +152,19 @@ diferente al del caso de problemas mono-objetivo.
 \subsection{Formulación Matemática}
 Los problemas de Optimización Multiobjetivo \textbf{(MOP)} se definen en su forma general de la siguiente manera:
  
-$$\min \overrightarrow{F(\bm{x})} = \left[ f_1(\bm{x}), f_2(\bm{x}) , \dots, f_n(\bm{x}) \right] $$
+$$\min \overrightarrow{F(\bm{x})} = \left[ f_1(\bm{x}), f_2(\bm{x}) , \dots, f_k(\bm{x}) \right] $$
 S.A:
  
 $$g_i(\bm{x}) \leq 0, i=1,2,\dots,m$$
 $$h_j(\bm{x}) = 0, j=1,2,\dots,p$$
-$$\bm{x} \in \Omega \subset \mathbb{R}^n$$
+$$\bm{x} \in \Omega \subset \mathbb{R}^k$$
 
-Se busca el conjunto de vectores $\bm{x}=[x_1,x_2,\dots,x_k]^T$ que optimicen la función $\overrightarrow{F}$. Las funciones $g_i$ representan las $m$ restricciones de desigualdad y $h_j$ las $p$ restricciones de igualdad.
+Se busca el conjunto de vectores $\bm{x}=[x_1,x_2,\dots,x_n]^T$ que optimicen la función $\overrightarrow{F}$. Las funciones $g_i$ representan las $m$ restricciones de desigualdad y $h_j$ las $p$ restricciones de igualdad, que definen el espacio factible $\Omega$.
 
 \subsubsection{Dominancia}
 
-Se dice de un vector $\overrightarrow{U}= (u_1 ,\dots, u_k )$ que domina a otro $\overrightarrow{V}= (v_1 ,\dots, v_k )$ (denotado $\overrightarrow{U} \preceq \overrightarrow{V}$ ) si y sólo si $\overrightarrow{U}$ es parcialmente menor que $\overrightarrow{V}$ , es decir,
-$\forall i \in \{1,\dots, k\}, u_i \leq v_i$ y $\exists i \in \{1,\dots, k \} $ tal que  $u_i<v_i$.
+Se dice de un vector $\overrightarrow{U}= (u_1 ,\dots, u_n )$ que domina a otro $\overrightarrow{V}= (v_1 ,\dots, v_n )$ (denotado $\overrightarrow{U} \preceq \overrightarrow{V}$ ) si y sólo si $\overrightarrow{U}$ es parcialmente menor que $\overrightarrow{V}$ , es decir,
+$\forall i \in \{1,\dots, n\}, u_i \leq v_i$ y $\exists i \in \{1,\dots, n \} $ tal que  $u_i<v_i$.
 \newline
 En el contexto del \textbf{MOP},  $\overrightarrow{U}$ y $\overrightarrow{V}$ se encuentran en el espacio de los objetivos.
  
@@ -188,42 +190,41 @@ frente de Pareto óptimo (o frente de Pareto real, denotado como $\mathcal{PF}_{
  
 \end{itemize}
 
-Una métrica es una función $I:Z_n \rightarrow \mathbb{R}^+$ cuyo valor permite medir la calidad de uno o más frentes aproximados $\mathcal{PF}_{aprox}$. Algunas métricas utilizadas comúnmente son:
+Una métrica es una función $I:Z_n \rightarrow \mathbb{R}^+$ cuyo valor permite medir la calidad de uno o más frentes aproximados $\mathcal{PF}_{aprox}$ de tamaño $n$. Algunas métricas utilizadas comúnmente son:
 
 \begin{itemize}
- \item Distancia generacional: La distancia generacional reporta qué tan lejos, en promedio, se encuentra el frente aproximado, $\mathcal{PF}_{aprox}$ , del frente óptimo, $\mathcal{PF}_{true}$
- $$\bm{GD}(\mathcal{PF}_{aprox},\mathcal{PF}_{true})=\frac{(\sum^n_{i=1} d_i^p(\mathcal{PF}_{aprox},\mathcal{PF}_{true}))^{\frac{1}{p}}}{\|\mathcal{PF}_{aprox}\|}$$
+ \item Distancia generacional: La distancia generacional reporta qué tan lejos, en promedio, se encuentra el frente aproximado, $\mathcal{PF}_{aprox}$ , del frente óptimo, $\mathcal{PF}_{true}$.
+ $$\bm{GD}(\mathcal{PF}_{aprox},\mathcal{PF}_{true})=\frac{(\sum^n_{i=1} d_i^p(\mathcal{PF}_{aprox},\mathcal{PF}_{true}))^{\frac{1}{p}}}{\|\mathcal{PF}_{aprox}\|},$$
  
- Donde:
+ donde:
  \begin{itemize}
-  \item $d_i$ es la distancia mínima entre el punto $p_i \in PF_{aprox}$ y $PF_{true}$  
+  \item $d_i$ es la distancia mínima entre el punto $p_i \in PF_{aprox}$ y $PF_{true}$.
   \item $p$ es el parámetro usualmente usado en 1 o 2.
  \end{itemize}
  
  
- \item Distancia generacional inversa: La distancia generacional inversa reporta qué tan lejos, en promedio, se encuentra un conjunto de vectores uniformemente distribuidos en el frente óptimo, $\mathcal{PF}_{true}$ , del frente aproximado, $\mathcal{PF}_{aprox}$
- $$\bm{iGD}(PF_{aprox},PF_{true})=\frac{\sum^n_{i=1} d_i(PF_{aprox},PF_{true})}{\|PF_{true}\|}$$
+ \item Distancia generacional inversa: La distancia generacional inversa reporta qué tan lejos, en promedio, se encuentra un conjunto de vectores uniformemente distribuidos en el frente óptimo, $\mathcal{PF}_{true}$ , del frente aproximado, $\mathcal{PF}_{aprox}$.
+ $$\bm{iGD}(PF_{aprox},PF_{true})=\frac{\sum^n_{i=1} d_i(PF_{aprox},PF_{true})}{\|PF_{true}\|},$$
  
-Donde $d_i$ es la distancia mínima entre el punto $p_i \in PF_{aprox}$ y $PF_{true}$.
+donde $d_i$ es la distancia mínima entre el punto $p_i \in PF_{aprox}$ y $PF_{true}$.
 
 
- \item Delta Diversidad: La métrica de diversidad (diversity metric) $\Delta$, mide la extensión de la dispersión lograda por las soluciones no dominadas
- $$\bm{\Delta}(\Omega,E_i)=\frac{\sum^k_{i=1} d(E_i,\Omega) + \sum_{p_i \in \Omega} |d(p_i,\Omega)-\overline{d}|}{\sum^k_{i=1} d(E_i,\Omega) + (|\Omega| - k)\overline{d}}$$
+ \item Delta Diversidad: La métrica de diversidad (diversity metric) $\Delta$, mide la extensión de la dispersión lograda por las soluciones no dominadas.
+ $$\bm{\Delta}(\Omega,E_i)=\frac{\sum^k_{i=1} d(E_i,\Omega) + \sum_{p_i \in \Omega} |d(p_i,\Omega)-\overline{d}|}{\sum^k_{i=1} d(E_i,\Omega) + (|\Omega| - k)\overline{d}},$$
  
- Donde:
+ donde:
  \begin{itemize}
-  \item $d(p_i,\Omega)$ es la distancia mínima entre el punto $p_i \in \Omega$ y el resto de los elementos en $\Omega$  
+  \item $d(p_i,\Omega)$ es la distancia mínima entre el punto $p_i \in \Omega$ y el resto de los elementos en $\Omega$.
   \item $\overline{d}$ es el promedio de $d(p_i,\Omega)$.
   \item $E$ son los puntos extremos del frente real $PF_{true}$.
  \end{itemize}
 
- \item Hipervolumen: El hipervolumen mide el área, volumen, o hipervolumen, encerrado entre los puntos en la aproximación del frente de Pareto, $PF_{aprox}$
-un punto de referencia, $r$.
- $$\bm{\Delta}(PF_{aprox},r)=\bigcup^N_{i=1} (v|p^j_i \leq v_j \leq r_j , j = 1, \dots, m) $$
+ \item Hipervolumen: El hipervolumen mide el área, volumen, o hipervolumen, encerrado entre los puntos en la aproximación del frente de Pareto, $PF_{aprox}$ y un punto de referencia, $r$.
+ $$\bm{\Delta}(PF_{aprox},r)=\bigcup^N_{i=1} (v|p^j_i \leq v_j \leq r_j , j = 1, \dots, m).$$
  
  \item Energia-$S$: La energia-$S$ está dada por:
- $$E_S(A)= \sum_{i\neq j}\| a_i - a_j\|^{-S}$$
- Donde $A = \{ a_1, \dots, a_{|A|}\}$ y $S>0$ es un parámetro fijo. Este indicador de rendimiento es utilizado para discretizar colectores en altas dimensiones y
+ $$E_S(A)= \sum_{i\neq j}\| a_i - a_j\|^{-S},$$
+ donde $A = \{ a_1, \dots, a_{|A|}\}$ y $S>0$ es un parámetro fijo. Este indicador de rendimiento es utilizado para discretizar colectores en altas dimensiones y
  su minimización implica una distribución uniforme de los puntos en $A$ si $S\geq m-1$\cite{hardin2004discretizing}.
 \end{itemize}
 
@@ -231,15 +232,15 @@ un punto de referencia, $r$.
 \section{Antecedentes}
 
 Entre los procedimientos metaheurísticos existen distintos marcos de trabajo enfocados a la optimización multiobjetivo.
-Aquí se exponen brevemente el funcionamiento de los marcos de trabajo MOEA/D y NSGA-III, así como las distintas estrategias tomadas para mejorar la diversidad del frente resultante.
-Ambos marcos de trabajo han sido seleccionados en virtud de ser los más representativos de sus respectivos enfoques de resolución además se ser ampliamente citados y usados como 
+Aquí se expone brevemente el funcionamiento de los marcos de trabajo MOEA/D y NSGA-III, así como las distintas estrategias tomadas para mejorar la diversidad del frente resultante.
+Ambos marcos de trabajo han sido seleccionados en virtud de ser los más representativos de sus respectivos enfoques de resolución, además de ser ampliamente citados y usados como 
 referencia comparativa de las técnicas recién propuestas en el estado del arte.
 
 \subsection{Marco de Trabajo MOEA/D}
 El \emph{MOEA/D} fue desarrollado por Qingfu Zhang y Hui Li de la Universidad de Essex en 2007 \cite{4358754}.
 
 Es un algoritmo de optimización inspirado en las técnicas de descomposición y los algoritmos genéticos. El proceso de descomposición requiere de un conjunto de vectores de peso,
-que deben cumplir con estar distribuidos uniformemente en el espacio de las soluciones. Es requerida además, una función de escalarización que admita diferentes vectores de peso, en principio,
+que deben cumplir con estar distribuidos uniformemente en el espacio de las soluciones. Es requerida además, una función de escalarización que admita diferentes vectores de peso. En principio,
 las funciones de sumas ponderadas  ($g^{ws}$) y pesos de Chebyshev ($g^{te}$) son usadas en la propuesta original del algoritmo y se definen como sigue:
 
 \begin{enumerate}
@@ -249,7 +250,7 @@ S.A:
 $$ \sum^M_{i=1} w_i = 1$$
 $$w \geq 0$$
 
-Esta función suele ofrecer buenos resultados en espacios de soluciones convexos, sin embargo, no es capaz de representar cada punto del $\mathcal{PF}_{true}$ cuando este último es no convexo.
+Donde $M$ es el número de objetivos. Esta función suele ofrecer buenos resultados en $\mathcal{PF}_{true}$ convexos, sin embargo, no es capaz de representar cada punto del $\mathcal{PF}_{true}$ cuando este último es no convexo.
 
 \item La función de pesos Chebyshev define el siguiente problema de optimización escalar:
 
@@ -258,11 +259,11 @@ $$\min g^{te}(x\|w) = \max_{1\leq i \leq M} w_i(f_i(x) -z_i^{*})$$
 Dónde:
 $$z^{*}= \min_{1\leq i \leq M} (f_i(x) | x \in \Omega) $$
 
-Se ha probado que la función de pesos de Chebyshev puede generar cualquier punto en $\mathcal{PF}_{true}$ sin importar la convexidad del espacio.
+Se ha probado que la función de pesos de Chebyshev puede generar cualquier punto en $\mathcal{PF}_{true}$ sin importar la convexidad del frente de Pareto.
 \end{enumerate}
 
 Una vez seleccionada la función de escalarización es posible definir $N$ problemas de optimización escalares, la resolución de los problemas se realiza de forma simultánea
-y colaborativa. Cada individuo de la población resuelve uno de los problemas escalares, intercambiando información (al momento de la generación de hijos por cruza y mutación) con las soluciones candidatas de los T problemas escalares más cercanos.
+y colaborativa. Cada individuo de la población resuelve uno de los problemas escalares, intercambiando información (al momento de la generación de hijos por cruza y mutación) con las soluciones candidatas de los $T$ problemas escalares más cercanos.
 Como marco de trabajo, \emph{MOEA/D} se distingue por tener las siguientes características:
 
  \begin{itemize}
@@ -300,16 +301,16 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 
 \subsection{Marco de Trabajo NSGA-III}
 
-El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014.\cite{6600851}. Utiliza los conceptos enunciados por Golberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}
-, es una mejora a NSGA-II para trabajar con problemas de más de $3$ objetivos.
+El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014\cite{6600851}. Utiliza los conceptos enunciados por Golberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}. 
+Es una adaptación de NSGA-II para para mejorar su rendimiento en problemas con problemas de más de $3$ objetivos.
 
-Inicia generando una población padre ($P_t$) de tamaño $N$ en el dominio del problema, utilizando las operaciones de selección, cruza y mutación genera una población descendiente ($Q_t$)
-Ambas poblaciones son combinadas y ordenadas en $K$ niveles conforme a los criterios de dominancia (``Non dominated sorting''), los $N$ mejores miembros son seleccionados para formar
-la siguiente población padre ($P_{t+1}$), esto es tomando los miembros de los mejores $l-1$ niveles de dominancia. Para completar los $N$ miembros de $P_{t+1}$ es requerido un procedimiento
-para seleccionar a los individuos faltantes entre los miembros del nivel $l$. Aquí la diferencia fundamental entre \emph{NSGA-III} y su predecesor es como se realiza la preservación de nichos,
-\emph{NSGA-III} propone sustituir ``Crowding distance'' por métodos de nichos centrados sobre puntos de referencia en el espacio de los objetivos, de tal manera que ayuden a mejorar la diversidad de la población. Para esto \emph{NSGA-III} genera puntos de referencia
-iniciales utilizando un método propuesto por Das \& Dennis en 1998 \cite{Das:1998:NIN:588907.589322} donde se definen $K$ puntos estructurados sobre el simplejo $M$ dimensional.
-Para determinar $K$ es requerido $H$ que es un parámetro a ajustar, entonces $K$ puede ser calculada como sigue:
+Inicia generando una población padre ($P_t$) de tamaño $N$ en el dominio del problema, utilizando las operaciones de selección, cruza y mutación genera una población descendiente ($Q_t$).
+Ambas poblaciones son combinadas y ordenadas en $K$ niveles conforme a los criterios de dominancia (\textit{Non dominated sorting}). Los $N$ mejores miembros son seleccionados para formar
+la siguiente población padre ($P_{t+1}$), esto es tomando los miembros de los mejores $l-1$ niveles de dominancia que aun no completan $N$ individuos. Para completar los $N$ miembros de $P_{t+1}$ es requerido un procedimiento
+para seleccionar a los individuos faltantes entre los miembros del nivel $l$. Aquí la diferencia fundamental entre \emph{NSGA-III} y su predecesor es cómo se realiza la preservación de nichos.
+\emph{NSGA-III} propone sustituir \textit{Crowding distance} por un método de nichos centrados sobre puntos de referencia en el espacio de los objetivos, de tal manera que ayuden a mejorar la diversidad de la población. Para esto \emph{NSGA-III} genera puntos de referencia
+iniciales utilizando un método propuesto por Das \& Dennis en 1998 \cite{Das:1998:NIN:588907.589322} donde se definen $K$ puntos estructurados sobre el simplejo $M$ el simplejo M dimensional (al igual que se generan los pesos en MOEA/D).
+Para determinar $K$ son requeridos $H,p$ que son parámetros a ajustar, entonces $K$ puede ser calculada como sigue:
   $$K= {M+H-1 \choose p}$$
 Cada punto $\bm{Z}^{(k)}=(z_1^{(k)},z_2^{(k)}, \dots, z_M^{(k)})$ satisface la siguiente condición:
   $$\sum_{i=1}^M z_i^{(K)} = 1$$
@@ -318,9 +319,9 @@ Esto genera un hiperplano en $M$ dimensiones con un ángulo igual para cada eje 
 \begin{figure}[h]
  \centering
 \includegraphics[scale=0.35]{hyper.png}
-\caption{Hiperplano unitario generado con el método de Das \& Dennis}.
+\caption{Hiperplano unitario generado con el método de Das \& Dennis.}
 \end{figure}
-Con los puntos de referencia y las magnitudes de las funciones objetivo normalizadas, se calcula la distancia ortogonal entre cada punto en nivel $l$ y se asocia a su punto de referencia más cercano,
+Con los puntos de referencia y las magnitudes de las funciones objetivo normalizadas, se calcula la distancia ortogonal entre cada punto en el nivel $l$ y se asocia a su punto de referencia más cercano,
 seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en los nichos menos poblados. Esto se repite hasta cumplir el criterio de paro.
 
 
@@ -362,7 +363,7 @@ seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en 
 
 \subsection{Métodos empleados para resolver el MOP mejorando la diversidad de las soluciones}
 
-Se han realizado varios esfuerzos enfocados a la mejora de la diversidad con ambas estrategias (descomposición con el \emph{MOEA/D} y dominancia con el \emph{NSGA-III}), la determinación de los vectores de peso o puntos de referencia constituye claramente un factor crítico para obtener una buena diversidad del frente aproximado. Se han propuesto varios algoritmos para generar vectores de pesos iniciales en el caso del enfoque de descomposición como:
+Se han realizado varios esfuerzos enfocados a la mejora de la diversidad con ambas estrategias (descomposición con el \emph{MOEA/D} y dominancia con el \emph{NSGA-III}), la determinación de los vectores de peso o puntos de referencia constituye claramente un factor crítico para obtener una buena diversidad del frente aproximado. En el caso del enfoque de descomposición se han propuesto varios algoritmos para generar los vectores de peso, por ejemplo:
 \newline
 % 
 % \begin{itemize}
@@ -377,11 +378,11 @@ Se han realizado varios esfuerzos enfocados a la mejora de la diversidad con amb
 
 
 \begin{itemize}
- \item Cheng He \& Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si la superficie del frente es cóncava, convexa o un hiperplano. Este procedimiento se repite para numerosas subregiones del espacio objetivo, generando experimentalmente un conjunto de puntos mejor distribuidos (de acuerdo a la métrica de ``Espaciamiento'') que el método de referencia propuesto por Das y Dennis \cite{7748353}.    
- \item Das \& Dennis (1998) proponen utilizar ``Simplex Lattice'' para la generación de puntos de referencia iniciales en la optimización multiobjetivo \cite{Das:1998:NIN:588907.589322}, esta técnica proviene del diseño de mezclas y es ampliamente usada en los algoritmos evolutivos multiobjetivo \cite{4358754,6600851}.
- \item Zhang \& Deb (2015) introducen una técnica que amplía ``Simplex Lattice'' utilizando un modelo de dos capas que permite integrar puntos adicionales en una capa interna, evitando que en altas dimensiones la mayoría de los puntos queden cercanos a las fronteras del simplejo generado \cite{li2015evolutionary}.
+ \item Das \& Dennis (1998) proponen utilizar ``Simplex Lattice'' para la generación de puntos de referencia iniciales en la optimización multiobjetivo \cite{Das:1998:NIN:588907.589322}. Esta técnica proviene del diseño de mezclas y es ampliamente usada en los algoritmos evolutivos multiobjetivo \cite{4358754,6600851}.
  \item Tan \& Yan (2013) adaptan la técnica de diseño uniforme \cite{fang2000uniform} a la optimización multiobjetivo donde los puntos iniciales son la solución a un problema de optimización combinatoria que minimiza la métrica de discrepancia centrada $L_2$ \cite{tan2013moea,fang2002centered}.
- \item Zapotecas et al. (2015) proponen utilizar secuencias bien conocidas por generar un muestreo de baja discrepancia con la métrica $L_2$ simple, sin embargo, el costo computacional de generar los vectores de peso es $O(N \cdot k \cdot log k)$ \cite{zapotecas2015low}.
+ \item Zhang \& Deb (2015) introducen una técnica que amplía ``Simplex Lattice'' utilizando un modelo de dos capas que permite integrar puntos adicionales en una capa interna, evitando que en altas dimensiones la mayoría de los puntos queden cercanos a las fronteras del simplejo generado \cite{li2015evolutionary}.
+ \item Zapotecas et al. (2015) proponen utilizar secuencias bien conocidas por generar un muestreo de baja discrepancia con la métrica $L_2$ simple, sin embargo, el costo computacional de generar los vectores de peso es $O(N \cdot k \cdot \log k)$ \cite{zapotecas2015low}.
+ \item Cheng He \& Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si la superficie del frente es cóncava, convexa o un hiperplano. Este procedimiento se repite para numerosas subregiones del espacio objetivo, generando experimentalmente un conjunto de puntos mejor distribuidos (de acuerdo a la métrica de ``Espaciamiento'') que el método de referencia propuesto por Das y Dennis \cite{7748353}.
 \end{itemize}
 
 Cabe mencionar que las estrategias antes mencionadas fueron implementadas en un contexto de vectores/puntos de referencia estáticos a lo largo del proceso de búsqueda. Por otro lado, un área poco estudiada propone modificar los puntos/vectores de referencia de forma dinámica durante el transcurso del algoritmo de tal manera que éstos se ajusten a la geometría del $\mathcal{PF}_{true}$:
@@ -393,13 +394,13 @@ Cabe mencionar que las estrategias antes mencionadas fueron implementadas en un 
   \item Yutao Qi et al. (2014) , basándose en su trabajo anterior, redefinen el vecindario en términos de triangulación de Delaunay como alternativa a los $k$ vecinos más cercanos, de tal manera que los triángulos tiendan a ser equiláteros separando y modificando los vectores de pesos en el transcurso del algoritmo \cite{qi2014moea}.
 \end{itemize}
 
-Como antes mencionado, esta última área ha sido poco explorada y el presente trabajo se propone el desarrollo de una estrategia para ajustar dinámicamente los vectores/puntos de referencia. Por ejemplo, una línea de investigación podría ser la adaptación de las ideas de repulsión de subpoblaciones, introducidas en la subsección siguiente.
+Como se mencionó anteriormente, esta última área ha sido poco explorada y el presente trabajo propone el desarrollo de una estrategia para ajustar dinámicamente los vectores/puntos de referencia. Por ejemplo, una línea de investigación podría ser la adaptación de las ideas de repulsión de subpoblaciones, introducidas en la subsección siguiente.
 \subsection{Repulsión de subpoblaciones}
 
 En 2016, Ahrari et al. proponen utilizar una técnica de nichos basada en la repulsión de subpoblaciones \cite{ahrari2016multimodal}. Toda subpoblación $P_i$ tiene un tamaño fijo $\lambda$,
 sus propios parámetros de cruza y mutación ($\sigma_{mean_i},C_i$), un centro ($x_{mean_i}$) y miembros élite. Existe también un conjunto de puntos prohibidos $y_k$
-(mejores soluciones actuales o los centros de las subpoblaciones) que restringen la generación de nuevas soluciones en base a una métrica, de forma que las nuevas soluciones aceptables
-se encontrarán en regiones poco exploradas del espacio de búsqueda. Una solución se considera aceptable si satisface el criterio distancia con todos los puntos prohibidos, de lo contrario,
+(mejores soluciones actuales o los centros de las subpoblaciones) que restringen la generación de nuevas soluciones con base a una métrica, de forma que las nuevas soluciones aceptables
+se encontrarán en regiones poco exploradas del espacio de búsqueda. Una solución se considera aceptable si satisface el criterio de tenner al menos distancia $D$ con todos los puntos prohibidos, de lo contrario,
 la solución es rechazada. El efecto general de esta estrategia es una remodelación de las soluciones alcanzadas de tal manera que las subpoblaciones exploran en regiones del espacio
 aún no visitadas previamente y prohibiendo que dos subpoblaciones busquen en la misma región del espacio de búsqueda.
 \newline
@@ -422,7 +423,7 @@ De esta forma proporcionan un marco de trabajo accesible computacionalmente para
 \newline
 
 Actualmente hay varios trabajos enfocados a mejorar las distribución de pesos. A pesar de que han tenido resultados prometedores \cite{4358754,6600851,li2015evolutionary,fang2000uniform}, aún es difícil conseguir una buena distribución en problemas
-con frentes desconectados, frentes convexos y no convexos, con distribución no uniforme, etc. Problemas de aplicación suelen mostrar este tipo de características se encuentran en campos como:
+con frentes desconectados, frentes convexos y no convexos, con distribución no uniforme, etc. Los problemas del mundo real que suelen mostrar este tipo de características se encuentran en campos como:
 
 \begin{itemize}
  \item Ingeniería automotriz \cite{6600851,liao2008multiobjective}.
@@ -447,7 +448,7 @@ Adaptar e integrar estrategias de generación y actualización de los vectores d
  
 \item Adaptar, implementar y describir el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
 
-\item Adaptar e implementar al menos dos estrategias para generar vectores de peso /puntos de referencia iniciales para \emph{MOEA/D} y \emph{NSGA-III}.
+\item Adaptar e implementar al menos dos estrategias para generar vectores de peso/puntos de referencia iniciales para \emph{MOEA/D} y \emph{NSGA-III}.
 
 \item Desarrollar al menos una estrategia de actualización de vectores de pesos para el método \emph{MOEA/D}, basada en el método de repulsión de subpoblacione \cite{ahrari2016multimodal}.
 
@@ -455,7 +456,7 @@ Adaptar e integrar estrategias de generación y actualización de los vectores d
   
 \item Realizar experimentos computacionales sobre un banco de instancias clásicas de optimización multiobjetivo \cite{zhang2008multiobjective} para comparar las diferentes versiones de los algoritmos estudiados, particularmente con respecto a las métricas de diversidad.
 
-\item Realizar experimentos computacionales sobre un banco de instancias clásicas de optimización multiobjetivo \cite{zhang2008multiobjective} para comparar los resultados obtenidos con los reportados en la literatura especializada.  
+\item Realizar experimentos computacionales sobre un banco de instancias clásicas de optimización multiobjetivo \cite{zhang2008multiobjective} para comparar los mejores resultados obtenidos con los reportados en la literatura especializada.  
 
 \end{itemize}
 
@@ -474,7 +475,7 @@ Particularmente, se realizará un análisis estadístico de cada una de las téc
 
 \item[•] \textbf{Etapa 2.} \emph{Adaptación e implementación de los marcos de trabajo MOEA/D y NSGA-III, incluyendo, para cada uno, al menos dos técnicas de generación de vectores/puntos de referencia iniciales.}
 
-\item[] Con base al análisis del perfil de nuestras técnicas, se implementarán en un lenguaje de programación.
+\item[] Con base en el análisis previo se implementarán en un lenguaje de programación.
         
 \item[•] \textbf{Etapa 3.} \emph{Comparaciones de las técnicas y análisis estadístico.}
 
