@@ -93,14 +93,14 @@ Desde el punto de vista metaheurístico, se han generado tres grandes enfoques p
 
 El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalar y suele introducir técnicas poblacionales para
 la resolución simultánea de ellos. Bajo este enfoque, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad del conjunto
-de soluciones arrojado, dejando la convergencia al submétodo de resolución. Un marco de trabajo moderno con este enfoque es el algoritmo evolutivo multiobjetivo basado en
+de soluciones arrojado, dejando la convergencia al submétodo de resolución. Un marco de trabajo popular con este enfoque es el algoritmo evolutivo multiobjetivo basado en
 descomposición (\emph{MOEA/D}) \cite{4358754}.
 \newline
 
 En el enfoque de dominancia, se utiliza la relación de dominancia para inducir un orden parcial en el espacio de los objetivos y, de esta manera, decidir cuándo una solución
 en dicho espacio es comparable con otra y, en este caso, cuál es la mejor. Cabe mencionar que dicho orden parcial está limitado en espacios de altas dimensiones puesto que una gran
 cantidad de soluciones serán no comparables, mermando en consecuencia la efectividad de los procedimientos de selección. El algoritmo genético de ordenamiento no dominado
-(\emph{NSGA-III}) \cite{6600851} es un marco de trabajo moderno con esta estrategia, que incorpora además técnicas de nichos para mantener la diversidad.
+(\emph{NSGA-III}) \cite{6600851} es un marco de trabajo popular con esta estrategia, que incorpora además técnicas de nichos para mantener la diversidad.
 \newline
 
 Finalmente, el enfoque basado en indicadores convierte el problema multiobjetivo original en un problema mono o multiobjetivo diferente, que optimiza el valor de algún indicador de desempeño,
@@ -120,7 +120,7 @@ considerado aceptable. Esta meta de obtener un conjunto de soluciones diversas y
  \item Degeneración del frente óptimo de Pareto.
 \end{itemize}
 
-En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que representan direcciones de búsqueda en el espacio objetivo. Si bien se han estudiado distintos métodos para generarlos,
+En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que representan direcciones de búsqueda en el espacio objetivo. Si bien se han estudiado distintos métodos para generarlos y que se detallan posteriormente,
 sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo. Esta estrategia de puntos/vectores de referencia estáticos experimenta problemas cuando el frente óptimo presenta las fuentes de dificultad antes mencionadas (no convexidad, degeneración, discontinuidad del frente óptimo).\\
 
 Por lo tanto, el presente proyecto propone, en primer lugar, comparar la eficacia de diferentes métodos de generación de dichos puntos/vectores de referencia;
@@ -304,17 +304,17 @@ $PE$ $\leftarrow$ ActualizarPE($Poblacion$)
 \subsection{Marco de trabajo NSGA-III}
 
 El marco de trabajo \emph{NSGA-III} fue propuesto por K. Deb and H. Jain en 2014 \cite{6600851}. Utiliza los conceptos enunciados por Goldberg sobre ordenamiento no dominado en algoritmos genéticos \cite{goldberg1988genetic}. 
-Es una adaptación de NSGA-II para para mejorar su rendimiento en problemas con problemas de más de $3$ objetivos.
+Es una adaptación de NSGA-II para mejorar su rendimiento en problemas con problemas de más de $3$ objetivos.
 
 Inicia generando una población padre ($P_t$) de tamaño $N$ en el dominio del problema, utilizando las operaciones de selección, cruza y mutación genera una población descendiente ($Q_t$).
 Ambas poblaciones son combinadas y ordenadas en $K$ niveles conforme a los criterios de dominancia (\textit{Non dominated sorting}). Los $N$ mejores miembros son seleccionados para formar
 la siguiente población padre ($P_{t+1}$), esto es tomando los miembros de los mejores $l-1$ niveles de dominancia que aun no completan $N$ individuos. Para completar los $N$ miembros de $P_{t+1}$ es requerido un procedimiento
 para seleccionar a los individuos faltantes entre los miembros del nivel $l$. Aquí la diferencia fundamental entre \emph{NSGA-III} y su predecesor es cómo se realiza la preservación de nichos.
 \emph{NSGA-III} propone sustituir \textit{Crowding distance} por un método de nichos centrados sobre puntos de referencia en el espacio de los objetivos, de tal manera que ayuden a mejorar la diversidad de la población. Para esto \emph{NSGA-III} genera puntos de referencia
-iniciales utilizando un método propuesto por Das \& Dennis en 1998 \cite{Das:1998:NIN:588907.589322} donde se definen $K$ puntos estructurados sobre el simplejo $M$ el simplejo M dimensional (al igual que se generan los pesos en MOEA/D).
+iniciales utilizando un método propuesto por Das \& Dennis en 1998 \cite{Das:1998:NIN:588907.589322} donde se definen $K$ puntos estructurados sobre el simplejo $M$ dimensional (al igual que se generan los pesos en MOEA/D).
 Para determinar $K$ son requeridos $H,p$ que son parámetros a ajustar, entonces $K$ puede ser calculada como sigue:
   $$K= {M+H-1 \choose p}$$
-Cada punto $\bm{Z}^{(k)}=(z_1^{(k)},z_2^{(k)}, \dots, z_M^{(k)})$ satisface la siguiente condición:
+Cada punto generado $\bm{Z}^{(k)}=(z_1^{(k)},z_2^{(k)}, \dots, z_M^{(k)})$ satisface la restricción de convexidad:
   $$\sum_{i=1}^M z_i^{(K)} = 1$$
 Esto genera un hiperplano en $M$ dimensiones con un ángulo igual para cada eje e intersectando cada eje en solo un punto.
 
@@ -365,7 +365,7 @@ seguido de un conteo de nichos para seleccionar a los miembros del nivel $l$ en 
 
 \subsection{Métodos empleados para resolver el POM mejorando la diversidad de las soluciones}
 
-Se han realizado varios esfuerzos enfocados a la mejora de la diversidad con ambas estrategias (descomposición con el \emph{MOEA/D} y dominancia con el \emph{NSGA-III}), la determinación de los vectores de pesos o puntos de referencia constituye claramente un factor crítico para obtener una buena diversidad del frente aproximado. En el caso del enfoque de descomposición se han propuesto varios algoritmos para generar los vectores de pesos, por ejemplo:
+Se han realizado varios esfuerzos enfocados a la mejora de la diversidad con ambas estrategias (descomposición con el \emph{MOEA/D} y dominancia con el \emph{NSGA-III}), la determinación de los vectores de pesos o puntos de referencia constituye claramente un factor crítico para obtener una buena diversidad del frente aproximado. Se han propuesto varios algoritmos para generar los vectores de pesos, por ejemplo:
 \newline
 % 
 % \begin{itemize}
@@ -383,7 +383,7 @@ Se han realizado varios esfuerzos enfocados a la mejora de la diversidad con amb
  \item Das \& Dennis (1998) proponen utilizar ``Simplex Lattice'' para la generación de puntos de referencia iniciales en la optimización multiobjetivo \cite{Das:1998:NIN:588907.589322}. Esta técnica proviene del diseño de mezclas y es ampliamente usada en los algoritmos evolutivos multiobjetivo \cite{4358754,6600851}.
  \item Tan \& Yan (2013) adaptan la técnica de diseño uniforme \cite{fang2000uniform} a la optimización multiobjetivo donde los puntos iniciales son la solución a un problema de optimización combinatoria que minimiza la métrica de discrepancia centrada $L_2$ \cite{tan2013moea,fang2002centered}.
  \item Zhang \& Deb (2015) introducen una técnica que amplía ``Simplex Lattice'' utilizando un modelo de dos capas que permite integrar puntos adicionales en una capa interna, evitando que en altas dimensiones la mayoría de los puntos queden cercanos a las fronteras del simplejo generado \cite{li2015evolutionary}.
- \item Zapotecas et al. (2015) proponen utilizar secuencias bien conocidas por generar un muestreo de baja discrepancia con la métrica $L_2$ simple, sin embargo, el costo computacional de generar los vectores de pesos es $O(N \cdot k \cdot \log k)$ \cite{zapotecas2015low}.
+ \item Zapotecas et al. (2015) proponen utilizar secuencias bien conocidas para generar un muestreo de baja discrepancia con la métrica $L_2$ simple, sin embargo, el costo computacional de generar los vectores de pesos es $O(N \cdot k \cdot \log k)$ \cite{zapotecas2015low}.
  \item Cheng He \& Linquiang Pan (2016) proponen un método de generación de puntos tomando en cuenta las propiedades de la función objetivo y determinando si la superficie del frente es cóncava, convexa o un hiperplano. Este procedimiento se repite para numerosas subregiones del espacio objetivo, generando experimentalmente un conjunto de puntos mejor distribuidos (de acuerdo a algún indicador de diversidad ) que el método de referencia propuesto por Das y Dennis \cite{7748353}.
 \end{itemize}
 
@@ -392,14 +392,14 @@ Cabe mencionar que las estrategias antes mencionadas fueron implementadas en un 
   \item Jiang et al. (2011) proponen un parámetro $l$ que calibra la generación de subproblemas lineales que maximizan el hipervolumen en una región, estos son resueltos con el método simplex, de tal manera que los vectores resultantes modelan la convexidad de la región \cite{jiang2011multiobjective}.
   \item Hi et al. (2011) introducen una preselección de vectores de pesos de un conjunto $\sigma$  generado con simplex lattice. Estos vectores de pesos son reevaluados con respecto  a la distancia euclidiana  a la solución no dominada más cercana y en su caso reemplazados por algún vector en $\sigma$ más cercano a dicha solución \cite{li2011adaptive}.
   \item Himanshu Jain \& Kalyanmoy Deb (2013) desarrollan una distribución adaptativa de los puntos de referencia para asegurar la diversidad, reubicando los puntos referencia que no han sido asociados a soluciones factibles hacia posiciones vecinas donde se espera tengan soluciones asociadas \cite{jain2013improved}.
-  \item Yutao Qi et al. (2014) proponen una estrategia de modificación de los vectores de pesos,en base a la generación de medidas de dispersión promoviendo la generación de vectores adicionales en regiones con alta dispersión o, al contrario, la eliminación de ciertos vectores de regiones densamente pobladas \cite{doi:10.1162/EVCOa00109}.
+  \item Yutao Qi et al. (2014) proponen una estrategia de modificación de los vectores de pesos, en base a la generación de medidas de dispersión promoviendo la generación de vectores adicionales en regiones con alta dispersión o, al contrario, la eliminación de ciertos vectores de regiones densamente pobladas \cite{doi:10.1162/EVCOa00109}.
   \item Yutao Qi et al. (2014), basándose en su trabajo anterior, redefinen el vecindario en términos de triangulación de Delaunay como alternativa a los $k$ vecinos más cercanos, de tal manera que los triángulos tiendan a ser equiláteros separando y modificando los vectores de pesos en el transcurso del algoritmo \cite{qi2014moea}.
 \end{itemize}
 
 Como se mencionó anteriormente, esta última área ha sido poco explorada y el presente trabajo propone el desarrollo de una estrategia para ajustar dinámicamente los vectores/puntos de referencia. Por ejemplo, una línea de investigación podría ser la adaptación de las ideas de repulsión de subpoblaciones, introducidas en la subsección siguiente.
 \subsection{Repulsión de subpoblaciones}
 
-En 2016, Ahrari et al. proponen utilizar una técnica de nichos basada en la repulsión de subpoblaciones \cite{ahrari2016multimodal}. Toda subpoblación $P_i$ tiene un tamaño fijo $\lambda$,
+En 2017, Ahrari et al. proponen utilizar una técnica de nichos basada en la repulsión de subpoblaciones \cite{ahrari2016multimodal}. Toda subpoblación $P_i$ tiene un tamaño fijo $\lambda$,
 sus propios parámetros de cruza y mutación ($\sigma_{mean_i},C_i$), un centro ($x_{mean_i}$) y miembros élite. Existe también un conjunto de puntos prohibidos $y_k$
 (mejores soluciones actuales o los centros de las subpoblaciones) que restringen la generación de nuevas soluciones con base a un indicador, de forma que las nuevas soluciones aceptables
 se encontrarán en regiones poco exploradas del espacio de búsqueda. Una solución se considera aceptable si satisface el criterio de tener al menos una distancia $D$ con todos los puntos prohibidos, de lo contrario,
@@ -453,9 +453,9 @@ Adaptar e integrar estrategias de generación y actualización de los vectores d
 
 \begin{itemize}
 
-\item Adaptar, implementar y determinar el comportamiento del método \emph{MOEA/D} para las instancias seleccionadas.
+\item Adaptar, implementar y determinar el comportamiento del método \emph{MOEA/D} para las instancias seleccionadas \cite{zhang2008multiobjective}.
  
-\item Adaptar, implementar y determinar el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas.
+\item Adaptar, implementar y determinar el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas \cite{zhang2008multiobjective}.
 
 \item Adaptar e implementar seis estrategias para generar vectores de pesos/puntos de referencia iniciales para \emph{MOEA/D} y \emph{NSGA-III}.
 
