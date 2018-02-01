@@ -18,7 +18,7 @@
 \usepackage{mathtools}
 \usepackage{bm}
 %\usepackage{draftwatermark}
-
+\newcommand{\blank}[1]{\hspace*{#1}}
 %\SetWatermarkText{\textsc{Borrador}}
 %\SetWatermarkScale{5}
 %\SetWatermarkAngle{55}
@@ -81,7 +81,7 @@ Los problemas de optimización multiobjetivo \textbf{(POM)} ha sido de gran util
 considerar múltiples objetivos, incluyendo tiempo, costos, cantidad, calidad, etc. Estos objetivos se encuentran típicamente en conflicto y se pueden encontrar inmersos en
 diferentes problemas como: ruteo de vehículos, localización, cadenas de suministro, calendarización, entre otros \cite{coello2004applications}.\\
 
-Esta clase de problemas ha sido tradicionalmente atacada reduciendo el \textbf{POM} a un problema mono-objetivo (estrategias de suma agregativa ponderada, de restricciones-$\epsilon$,
+Esta clase de problemas ha sido tradicionalmente atacada reduciendo el \textbf{POM} a un problema mono-objetivo (estrategias de suma ponderada, de restricciones-$\epsilon$,
 de programación por metas). Desde los años 1990, los esfuerzos de investigación se han dedicado al desarrollo de técnicas metaheurísticas y, particularmente, Algoritmos Evolutivos (AEs).
 Desde el punto de vista metaheurístico, se han generado tres grandes enfoques para resolver el \textbf{POM}:
 
@@ -93,7 +93,7 @@ Desde el punto de vista metaheurístico, se han generado tres grandes enfoques p
 
 El enfoque de descomposición explícitamente descompone un problema multiobjetivo en $N$ problemas de optimización escalar y suele introducir técnicas poblacionales para
 la resolución simultánea de ellos. Bajo este enfoque, es importante seleccionar los problemas escalares conforme a algún criterio que permita mejorar la diversidad del conjunto
-de soluciones arrojado, dejando la convergencia al submétodo de resolución. Un marco de trabajo popular con este enfoque es el algoritmo evolutivo multiobjetivo basado en
+de soluciones arrojado, dejando la convergencia al submétodo de resolución como podría ser algoritmos geneticos, estrategias evolutivas, etc. Un marco de trabajo popular con este enfoque es el algoritmo evolutivo multiobjetivo basado en
 descomposición (\emph{MOEA/D}) \cite{4358754}.
 \newline
 
@@ -121,7 +121,7 @@ considerado aceptable. Esta meta de obtener un conjunto de soluciones diversas y
 \end{itemize}
 
 En general, los enfoques basados en dominancia y descomposición utilizan puntos y/o vectores de referencia, que representan direcciones de búsqueda en el espacio objetivo. Si bien se han estudiado distintos métodos para generarlos y que se detallan posteriormente,
-sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo. Esta estrategia de puntos/vectores de referencia estáticos experimenta problemas cuando el frente óptimo presenta las fuentes de dificultad antes mencionadas (no convexidad, degeneración, discontinuidad del frente óptimo).\\
+sus valores se mantienen clásicamente fijos durante el transcurso de la ejecución del algoritmo. Esta estrategia de puntos/vectores de referencia estáticos experimenta problemas cuando el frente óptimo presenta las fuentes de dificultad antes mencionadas.\\
 
 Por lo tanto, el presente proyecto propone, en primer lugar, comparar la eficacia de diferentes métodos de generación de dichos puntos/vectores de referencia;
 y posteriormente, investigar técnicas que permitan ajustarlos en el transcurso de la búsqueda, con el fin de mejorar la diversidad del conjunto solución final.\\
@@ -248,7 +248,7 @@ las funciones de sumas ponderadas  ($g^{ws}$) y pesos de Chebyshev ($g^{te}$) so
 \begin{enumerate}
 \item La función de sumas ponderadas define el siguiente problema de optimización escalar:
 $$\min g^{ws}(x\|w) = \sum^M_{i=1} w_if_i(x) $$
-S.A:
+\blank{3cm}s.a:
 $$ \sum^M_{i=1} w_i = 1$$
 $$w \geq 0$$
 
@@ -258,7 +258,7 @@ Donde $M$ es el número de objetivos. Esta función suele ofrecer buenos resulta
 
 $$\min g^{te}(x\|w) = \max_{1\leq i \leq M} w_i(f_i(x) -z_i^{*})$$
 
-Dónde:
+dónde:
 $$z^{*}= \min_{1\leq i \leq M} (f_i(x) | x \in \Omega) $$
 
 Se ha probado que la función de pesos de Chebyshev puede generar cualquier punto en $\mathcal{PF}_{true}$ sin importar la convexidad del frente de Pareto.
@@ -401,7 +401,7 @@ Como se mencionó anteriormente, esta última área ha sido poco explorada y el 
 
 En 2017, Ahrari et al. proponen utilizar una técnica de nichos basada en la repulsión de subpoblaciones \cite{ahrari2016multimodal}. Toda subpoblación $P_i$ tiene un tamaño fijo $\lambda$,
 sus propios parámetros de cruza y mutación ($\sigma_{mean_i},C_i$), un centro ($x_{mean_i}$) y miembros élite. Existe también un conjunto de puntos prohibidos $y_k$
-(mejores soluciones actuales o los centros de las subpoblaciones) que restringen la generación de nuevas soluciones con base a un indicador, de forma que las nuevas soluciones aceptables
+(mejores soluciones actuales o los centros de las subpoblaciones) que restringen la generación de nuevas soluciones con base a una métrica \cite{mahalanobis1936generalised}, de forma que las nuevas soluciones aceptables
 se encontrarán en regiones poco exploradas del espacio de búsqueda. Una solución se considera aceptable si satisface el criterio de tener al menos una distancia $D$ con todos los puntos prohibidos, de lo contrario,
 la solución es rechazada. El efecto general de esta estrategia es una remodelación de las soluciones alcanzadas de tal manera que las subpoblaciones exploran en regiones del espacio
 aún no visitadas previamente, prohibiendo que dos subpoblaciones busquen en la misma región del espacio de búsqueda.
@@ -457,7 +457,7 @@ Adaptar e integrar estrategias de generación y actualización de los vectores d
  
 \item Adaptar, implementar y determinar el comportamiento del método \emph{NSGA-III} para las instancias seleccionadas \cite{zhang2008multiobjective}.
 
-\item Adaptar e implementar seis estrategias para generar vectores de pesos/puntos de referencia iniciales para \emph{MOEA/D} y \emph{NSGA-III}.
+\item Generar vectores de pesos/puntos de referencia iniciales para \emph{MOEA/D} y \emph{NSGA-III}.
 
 \item Desarrollar una estrategia de actualización de vectores de pesos para el método \emph{MOEA/D}, basada en el método de repulsión de subpoblaciones \cite{ahrari2016multimodal}.
 
@@ -472,7 +472,7 @@ Adaptar e integrar estrategias de generación y actualización de los vectores d
 
 \section{Metodología}
 
-Para la implementación de las dos heurísticas basadas en los enfoques de descomposición y dominancia, se hizo una revisión en el estado del arte para analizar las características de los marcos de trabajo NSGA-III y MOEA/D, tomándolas  como  base para la adaptación al problema. Posteriormente se propondrán mejoras a estos algoritmos, como se describe a continuación.
+Para la implementación de las dos heurísticas basadas en los enfoques de descomposición y dominancia, se hizo una revisión del estado del arte para analizar las características de los marcos de trabajo NSGA-III y MOEA/D, tomándolas  como  base para la adaptación al problema. Posteriormente se propondrán mejoras a estos algoritmos, como se describe a continuación.
 \newline
 
 Particularmente, se realizará un análisis de la prueba de rangos con signo de Wilcoxon \cite{wilcoxon1945individual} de cada una de las técnicas implementadas, comparando su rendimiento contra algunas de las técnicas propuestas en la literatura.
@@ -515,7 +515,7 @@ Implementación de la técnica NSGA-III y pruebas preliminares   & 18I        & 
 Diseño de una estrategia de actualización de los vectores de pesos/puntos de referencia basada en \cite{ahrari2016multimodal} & 18I        & 10-11    &    2 semanas      \\ \hline
 Adaptación e implementación de la estrategia de actualización en NSGA-III y MOEA/D & 18P        & 1-4    &   4 semanas      \\ \hline
 Experimentos computacionales definitivos, análisis y comparación de técnicas  & 18P        & 5-8       & 4 semanas      \\ \hline
-Redacción de tesis                                             & 18P        &  5-11   &    7 semanas     \\ \hline
+Redacción de una idónea comunicación de resultados                                             & 18P        &  5-11   &    7 semanas     \\ \hline
 \end{tabular}
 }
 \caption{Cronograma}
